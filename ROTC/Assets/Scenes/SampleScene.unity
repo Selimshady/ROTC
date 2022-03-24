@@ -953,7 +953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1baec37646737a42bfae45ef7562ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 5
   jumpForce: 5
   ceilingCheck: {fileID: 97629316}
   groundCheck: {fileID: 1901576136}
@@ -961,6 +961,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   checkRadius: 0.03
+  maxAttackCoolDown: 0.5
 --- !u!95 &966419414
 Animator:
   serializedVersion: 3
@@ -971,7 +972,7 @@ Animator:
   m_GameObject: {fileID: 966419408}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3c2a5b7097b0fe44394328c0bdb9252e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

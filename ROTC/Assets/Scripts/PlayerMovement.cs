@@ -14,16 +14,30 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundObjects; // Where can character reset its jumpCount
     public float checkRadius; //To understand if character is grounded
     
-    private bool facingRight; // For animation
     private float moveDirection; //For animation
-    private bool isJumping; // To make character jump
-    private bool isGrounded; // to reset jumpCount
     private int maxJumpCount = 1;
     private int jumpCount; //Character can jump more than once
 
-    private Animator animator;
-    private string CurrentState;
 
+    private bool facingRight; // For animation 
+    private bool isGrounded; // to reset jumpCount
+    private bool isJumping; // To make character jump
+    private bool isAttacking;
+
+    //Animation
+    private Animator animator; // to control in change animations
+    private string currentState; // current Animation playing
+    public float maxAttackCoolDown;
+    private float attackCoolDown;
+
+    //Animation States;
+    const string IDLE = "Idle";
+    const string FALL = "Fall";
+    const string JUMP = "Jump";
+    const string RUN = "Run";
+    const string ATTACK1 = "Attack1";
+
+    private IEnumerator animCoroutine;
 
     private void Awake() 
     {
@@ -33,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start() 
     {
+        attackCoolDown = maxAttackCoolDown;
         facingRight = true;
         jumpCount = maxJumpCount; //  Jump count can be more than 1.
     }
@@ -42,6 +57,9 @@ public class PlayerMovement : MonoBehaviour
         InputProcess();//Gets input values about jumping and moving.
         CheckGround();//Checks if character is on air or not.
         Animate();//Change direction of character.
+        changeAnimations(); // Control change in animation.
+        attackCoolDown -= Time.deltaTime;
+        Debug.Log(attackCoolDown);
     }
 
     
@@ -56,6 +74,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && jumpCount > 0) //Returns bool.
         {
             isJumping = true;
+        }
+        if(attackCoolDown <= 0 && Input.GetMouseButtonDown(0))
+        {
+            attackCoolDown = maxAttackCoolDown;
+            isAttacking = true;
         }
     }
 
@@ -93,6 +116,54 @@ public class PlayerMovement : MonoBehaviour
     {
         facingRight =!facingRight;
         transform.Rotate(0f,180f,0f);
+    }
+
+    private void changeAnimations()
+    {
+        if(isAttacking)
+        {
+            changeAnimationState(ATTACK1);
+            StartCoroutine(WaitForAttackAnim());
+        }
+        else if(isGrounded)
+        {
+            if(moveDirection != 0)
+            {
+                changeAnimationState(RUN);
+            }
+            else
+            {   
+                changeAnimationState(IDLE);
+            }
+        }
+        else
+        {
+            if(rb.velocity.y > 0)
+            {
+                changeAnimationState(JUMP);
+            }
+            else if(rb.velocity.y < 0)
+            {
+                changeAnimationState(FALL);
+            }
+        }
+    }
+
+    private void changeAnimationState(string newState)
+    {
+        if(currentState == newState)
+        {
+            return;
+        }
+        animator.Play(newState);
+        currentState = newState;
+    }
+
+
+    IEnumerator WaitForAttackAnim()
+    {
+        yield return new WaitForSeconds(0.4f);
+        isAttacking = false;
     }
 
     private void OnDrawGizmos() 
