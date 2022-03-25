@@ -961,7 +961,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   checkRadius: 0.03
-  maxAttackCoolDown: 0.5
+  maxAttackCoolDown: 0.4
+  maxBlockTimer: 0.2
 --- !u!95 &966419414
 Animator:
   serializedVersion: 3

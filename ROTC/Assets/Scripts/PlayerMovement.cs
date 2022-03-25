@@ -23,21 +23,27 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded; // to reset jumpCount
     private bool isJumping; // To make character jump
     private bool isAttacking;
+    private bool isAttackPressed;
+    private bool isBlocking;
+    private bool isBlockPressed;
+
+    [SerializeField] private float maxAttackCoolDown;
+    [SerializeField] private float maxBlockTimer;
+    private float blockTimer;
+
 
     //Animation
     private Animator animator; // to control in change animations
     private string currentState; // current Animation playing
-    public float maxAttackCoolDown;
-    private float attackCoolDown;
-
+    
     //Animation States;
     const string IDLE = "Idle";
     const string FALL = "Fall";
     const string JUMP = "Jump";
     const string RUN = "Run";
     const string ATTACK1 = "Attack1";
-
-    private IEnumerator animCoroutine;
+    const string BLOCK = "Block";
+    const string IDLEBLOCK = "Idle Block";
 
     private void Awake() 
     {
@@ -47,38 +53,43 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start() 
     {
-        attackCoolDown = maxAttackCoolDown;
         facingRight = true;
         jumpCount = maxJumpCount; //  Jump count can be more than 1.
     }
 
     private void Update()
     {
-        InputProcess();//Gets input values about jumping and moving.
-        CheckGround();//Checks if character is on air or not.
-        Animate();//Change direction of character.
-        changeAnimations(); // Control change in animation.
-        attackCoolDown -= Time.deltaTime;
-        Debug.Log(attackCoolDown);
+        InputProcess();//Gets input values about jumping and moving.    
     }
 
     
     private void FixedUpdate()
     {
+        ChangeAnimations(); // Control change in animation.
+        Animate();//Change direction of character.
+        CheckGround();//Checks if character is on air or not.
         Move(); // character move with rigidBody
     }
 
     private void InputProcess()
     {
         moveDirection = Input.GetAxis("Horizontal"); // Returns an int between [-1,+1] as depending on input.
-        if (Input.GetButtonDown("Jump") && jumpCount > 0) //Returns bool.
+        if(Input.GetButtonDown("Jump") && jumpCount > 0) //Returns bool.
         {
             isJumping = true;
         }
-        if(attackCoolDown <= 0 && Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !isAttacking)
         {
-            attackCoolDown = maxAttackCoolDown;
-            isAttacking = true;
+            isAttackPressed = true;
+        }
+        if(Input.GetMouseButtonDown(1))
+        {
+            isBlockPressed = true;
+        }
+        if(Input.GetMouseButtonUp(1))
+        {
+            isBlockPressed = false;
+            isBlocking = false;
         }
     }
 
@@ -93,12 +104,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
-        if(isJumping)
+        if(!isBlocking)
         {
-            rb.velocity = new Vector2(0f,jumpForce);
-            jumpCount--;
+            rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
+            if(isJumping)
+            {
+                rb.velocity = new Vector2(0f,jumpForce);
+                jumpCount--;
+                isJumping = false;
+            }
+        }
+        else
+        {
+            rb.velocity = new Vector2(0,rb.velocity.y);
             isJumping = false;
+            isAttackPressed = false;
         }
     }
 
@@ -118,35 +138,60 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(0f,180f,0f);
     }
 
-    private void changeAnimations()
+    private void ChangeAnimations()
     {
-        if(isAttacking)
+        if(isBlockPressed)
         {
-            changeAnimationState(ATTACK1);
-            StartCoroutine(WaitForAttackAnim());
-        }
-        else if(isGrounded)
-        {
-            if(moveDirection != 0)
+            if(!isBlocking)
             {
-                changeAnimationState(RUN);
+                changeAnimationState(BLOCK);
+                isBlocking = true;
+                blockTimer = maxBlockTimer;
+            }
+            else if(blockTimer < 0)
+            {
+                changeAnimationState(IDLEBLOCK);
             }
             else
-            {   
-                changeAnimationState(IDLE);
-            }
+                blockTimer-=Time.deltaTime;
         }
-        else
+        else if(!isAttacking)
         {
-            if(rb.velocity.y > 0)
-            {
-                changeAnimationState(JUMP);
+            if(isAttackPressed)
+            {   
+                isAttackPressed = false;
+                changeAnimationState(ATTACK1);
+                isAttacking = true;
+                Invoke("AttackComplete",maxAttackCoolDown);
             }
-            else if(rb.velocity.y < 0)
+            else if(isGrounded)
             {
-                changeAnimationState(FALL);
+                if(moveDirection != 0)
+                {
+                    changeAnimationState(RUN);
+                }
+                else
+                {   
+                    changeAnimationState(IDLE);
+                }
+            }
+            else
+            {
+                if(rb.velocity.y > 0)
+                {
+                    changeAnimationState(JUMP);
+                }
+                else if(rb.velocity.y < 0)
+                {
+                    changeAnimationState(FALL);
+                }
             }
         }
+    }
+
+    private void AttackComplete()
+    {
+        isAttacking = false;
     }
 
     private void changeAnimationState(string newState)
@@ -157,13 +202,6 @@ public class PlayerMovement : MonoBehaviour
         }
         animator.Play(newState);
         currentState = newState;
-    }
-
-
-    IEnumerator WaitForAttackAnim()
-    {
-        yield return new WaitForSeconds(0.4f);
-        isAttacking = false;
     }
 
     private void OnDrawGizmos() 
