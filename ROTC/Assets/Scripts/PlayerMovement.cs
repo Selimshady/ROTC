@@ -15,9 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float checkRadius; //To understand if character is grounded
     
     private float moveDirection; //For animation
-    private int maxJumpCount = 1;
-    private int jumpCount; //Character can jump more than once
-
+    private int hitCount;
 
     private bool facingRight; // For animation 
     private bool isGrounded; // to reset jumpCount
@@ -27,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isBlocking;
     private bool isBlockPressed;
 
+
+    private float coolDown;
     [SerializeField] private float maxAttackCoolDown;
     [SerializeField] private float maxBlockTimer;
     private float blockTimer;
@@ -41,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
     const string FALL = "Fall";
     const string JUMP = "Jump";
     const string RUN = "Run";
-    const string ATTACK1 = "Attack1";
     const string BLOCK = "Block";
     const string IDLEBLOCK = "Idle Block";
 
@@ -54,12 +53,12 @@ public class PlayerMovement : MonoBehaviour
     private void Start() 
     {
         facingRight = true;
-        jumpCount = maxJumpCount; //  Jump count can be more than 1.
     }
 
     private void Update()
     {
-        InputProcess();//Gets input values about jumping and moving.    
+        InputProcess();//Gets input values about jumping and moving.
+        CoolDown();    
     }
 
     
@@ -74,13 +73,25 @@ public class PlayerMovement : MonoBehaviour
     private void InputProcess()
     {
         moveDirection = Input.GetAxis("Horizontal"); // Returns an int between [-1,+1] as depending on input.
-        if(Input.GetButtonDown("Jump") && jumpCount > 0) //Returns bool.
+        if(Input.GetButtonDown("Jump")) //Returns bool.
         {
             isJumping = true;
         }
-        if(Input.GetMouseButtonDown(0) && !isAttacking)
+        if(Input.GetMouseButtonDown(0))
         {
-            isAttackPressed = true;
+            if(hitCount != 0)
+            {
+                if(coolDown >= maxAttackCoolDown/2)
+                {
+                    isAttacking = true;
+                    isAttackPressed = true;
+                }
+            }
+            else
+            {
+                isAttacking = true;
+                isAttackPressed = true;
+            }
         }
         if(Input.GetMouseButtonDown(1))
         {
@@ -96,10 +107,6 @@ public class PlayerMovement : MonoBehaviour
     private void CheckGround()
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.position,new Vector2(0.7f,checkRadius),0f,groundObjects);
-        if(isGrounded)
-        {
-            jumpCount = maxJumpCount;
-        }
     }
 
     private void Move()
@@ -110,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
             if(isJumping)
             {
                 rb.velocity = new Vector2(0f,jumpForce);
-                jumpCount--;
                 isJumping = false;
             }
         }
@@ -125,9 +131,7 @@ public class PlayerMovement : MonoBehaviour
     private void Animate()
     {
         if(moveDirection > 0 && !facingRight)
-        {
-            flipCharacter(); // change rotation of character.
-        }
+            flipCharacter(); // change rotation of character. 
         else if(moveDirection < 0 && facingRight)
             flipCharacter();
     }
@@ -146,32 +150,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 changeAnimationState(BLOCK);
                 isBlocking = true;
-                blockTimer = maxBlockTimer;
             }
-            else if(blockTimer < 0)
-            {
-                changeAnimationState(IDLEBLOCK);
-            }
-            else
-                blockTimer-=Time.deltaTime;
         }
         else if(!isAttacking)
         {
-            if(isAttackPressed)
-            {   
-                isAttackPressed = false;
-                changeAnimationState(ATTACK1);
-                isAttacking = true;
-                Invoke("AttackComplete",maxAttackCoolDown);
-            }
-            else if(isGrounded)
+            if(isGrounded)
             {
                 if(moveDirection != 0)
                 {
                     changeAnimationState(RUN);
                 }
                 else
-                {   
+                {
                     changeAnimationState(IDLE);
                 }
             }
@@ -187,12 +177,29 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        else if(isAttackPressed)
+        {
+            hitCount++;
+            isAttackPressed = false;
+            if(coolDown <= maxAttackCoolDown && hitCount <= 3)
+            {
+                changeAnimationState("Attack" + hitCount);
+                coolDown = 0;
+            }
+        }
     }
 
-    private void AttackComplete()
+    private void CoolDown()
     {
-        isAttacking = false;
+        coolDown += Time.deltaTime;
+        if(coolDown > maxAttackCoolDown)
+        {
+            hitCount = 0;
+            coolDown = 0;
+            isAttacking = false;
+        }
     }
+
 
     private void changeAnimationState(string newState)
     {
