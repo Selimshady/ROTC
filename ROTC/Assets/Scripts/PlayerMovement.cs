@@ -42,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
     const string JUMP = "Jump";
     const string RUN = "Run";
     const string BLOCK = "Block";
-    const string IDLEBLOCK = "Idle Block";
 
     private void Awake() 
     {
@@ -73,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     private void InputProcess()
     {
         moveDirection = Input.GetAxis("Horizontal"); // Returns an int between [-1,+1] as depending on input.
-        if(Input.GetButtonDown("Jump")) //Returns bool.
+        if(Input.GetButtonDown("Jump") && isGrounded) //Returns bool.
         {
             isJumping = true;
         }
@@ -81,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if(hitCount != 0)
             {
-                if(coolDown >= maxAttackCoolDown/2)
+                if(coolDown >= maxAttackCoolDown/2) // WARNING
                 {
                     isAttacking = true;
                     isAttackPressed = true;
@@ -181,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
         {
             hitCount++;
             isAttackPressed = false;
-            if(coolDown <= maxAttackCoolDown && hitCount <= 3)
+            if(coolDown <= maxAttackCoolDown && hitCount <= 3) // WARNING
             {
                 changeAnimationState("Attack" + hitCount);
                 coolDown = 0;
