@@ -2,76 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcherMovement : MonoBehaviour
+public class ArcherMovement : PlayerMovement
 {
-    private Rigidbody2D rb;
-
-    [Header("Movement")]
-    public float moveSpeed;
-    public float jumpForce;
-    public Transform ceilingCheck;
-    public Transform groundCheck;
-    public LayerMask groundObjects;
-    public float checkRadius;
     [Header("Combat")]
     public GameObject arrowPref;
     public Transform spawnPos;
     public float arrowSpeed;
-
-    private float moveDirection;
-    private bool facingRight;
-    private bool isGrounded;
-    private bool isJumping;
     private bool isStartStreching;
     private bool isReleased;
     private bool isHolding;
     private bool shotEnabled;
 
-    private Animator animator;
-    private string currentState;
-
-    const string IDLE = "Idle";
-    const string FALL = "Fall";
-    const string JUMP = "Jump";
-    const string RUN = "Run";
-    const string ATTACK = "Attack";
-    private void Awake() 
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        base.Start();
+        isReleased = true; // Arrow is free to shot.
+        shotEnabled = true; // Can shoot.
     }
 
-
-
-    // Start is called before the first frame update
-    void Start()
+    protected override void FixedUpdate() 
     {
-        facingRight = true;   
-        isReleased = true;
-        shotEnabled = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        InputProcess();
-    }
-
-    private void FixedUpdate() 
-    {
+        base.FixedUpdate();
+        
         ChangeAnimations();
-        Animate();
-        CheckGround();
         Move();    
     }
 
-    private void InputProcess()
+    protected override void InputProcess()
     {
-        moveDirection = Input.GetAxis("Horizontal");
-        if(Input.GetButtonDown("Jump") && isGrounded)
-        {
-            isJumping = true;
-        }
+        base.InputProcess();
 
         if(Input.GetMouseButtonDown(0) && shotEnabled)
         {
@@ -98,11 +57,7 @@ public class ArcherMovement : MonoBehaviour
         {
             arrow.GetComponent<Rigidbody2D>().velocity = new Vector2(arrowSpeed * -2,arrow.GetComponent<Rigidbody2D>().velocity.y);
         }
-    }
-
-    private void CheckGround()
-    {
-        isGrounded = Physics2D.OverlapBox(groundCheck.position,new Vector2(0.7f,checkRadius),0f,groundObjects);
+        Destroy(arrow,2f);
     }
 
     private void Move()
@@ -115,29 +70,11 @@ public class ArcherMovement : MonoBehaviour
         }
     }
 
-    private void Animate()
-    {
-        if(moveDirection > 0 && !facingRight)
-        {
-            FlipCharacter();
-        }
-        else if(moveDirection < 0 && facingRight)
-        {
-            FlipCharacter();
-        }
-    }
-
-    private void FlipCharacter()
-    {
-        facingRight = !facingRight;
-        transform.Rotate(0f,180f,0f);
-    }
-
     private void ChangeAnimations()
     {
         if(isStartStreching)
         {
-            changeAnimationState(ATTACK);
+            ChangeAnimationState(ATTACK);
             isStartStreching = false;
         }
         else if(isReleased)
@@ -146,26 +83,26 @@ public class ArcherMovement : MonoBehaviour
             {
                 if(moveDirection != 0)
                 {
-                    changeAnimationState(RUN);
+                    ChangeAnimationState(RUN);
                 }
                 else
-                    changeAnimationState(IDLE);
+                    ChangeAnimationState(IDLE);
             }
             else
             {
                 if(rb.velocity.y > 0)
                 {
-                    changeAnimationState(JUMP);
+                    ChangeAnimationState(JUMP);
                 }
                 else if(rb.velocity.y < 0)
                 {
-                    changeAnimationState(FALL);
+                    ChangeAnimationState(FALL);
                 }
             }
         }
     }
     
-    //Controller by animator.
+    //Controlled by animator.
     public void Release()
     {
         shotEnabled = true;
@@ -178,18 +115,4 @@ public class ArcherMovement : MonoBehaviour
             animator.speed = 0;
     }
 
-    private void changeAnimationState(string newState)
-    {
-        if(currentState == newState)
-        {
-            return;
-        }
-        animator.Play(newState);
-        currentState = newState;
-    }
-
-    private void OnDrawGizmos() 
-    { // to be able to see the groundCheck radius
-        Gizmos.DrawWireCube(groundCheck.position,new Vector2(0.8f,checkRadius));
-    }
 }
