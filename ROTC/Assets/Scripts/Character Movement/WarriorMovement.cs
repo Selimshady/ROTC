@@ -16,6 +16,12 @@ public class WarriorMovement : PlayerMovement
     [SerializeField] private float maxAttackCoolDown;
     [SerializeField] private float maxBlockTimer;
 
+    protected override void Start()
+    {
+        base.Start();
+        facingRight = true;
+    }
+
     protected override void Update() 
     {
         base.Update();
@@ -25,7 +31,6 @@ public class WarriorMovement : PlayerMovement
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-
         ChangeAnimations(); // Control change in animation.
         Move(); // character move with rigidBody
     }

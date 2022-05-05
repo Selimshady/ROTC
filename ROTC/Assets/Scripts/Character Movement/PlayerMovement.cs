@@ -41,12 +41,11 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Start()// Start is called before the first frame update
     {
-        facingRight = true;   
+        //facingRight = true;   
     }
 
     protected virtual void Update()
     {
-        Debug.Log(moveDirection);
         InputProcess();//Gets input values about jumping and moving.  
         ChangeCharacter();
     }
@@ -103,6 +102,8 @@ public class PlayerMovement : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Alpha1) && !warrior.activeInHierarchy)
             {
                 warrior.transform.position = new Vector2(this.gameObject.transform.position.x,warrior.transform.position.y);
+                warrior.GetComponent<PlayerMovement>().facingRight = facingRight;
+                warrior.transform.rotation = transform.rotation;
                 ChangeAnimationState(IDLE);
                 this.gameObject.SetActive(false);
                 warrior.SetActive(true);
@@ -110,6 +111,8 @@ public class PlayerMovement : MonoBehaviour
             else if(Input.GetKeyDown(KeyCode.Alpha2) && !archer.activeInHierarchy)
             {
                 archer.transform.position = new Vector2(this.gameObject.transform.position.x,archer.transform.position.y);
+                archer.GetComponent<PlayerMovement>().facingRight = facingRight;
+                archer.transform.rotation = transform.rotation;
                 ChangeAnimationState(IDLE);
                 this.gameObject.SetActive(false);
                 archer.SetActive(true);
@@ -117,6 +120,8 @@ public class PlayerMovement : MonoBehaviour
             else if(Input.GetKeyDown(KeyCode.Alpha3) && !wizard.activeInHierarchy)
             {
                 wizard.transform.position = new Vector2(this.gameObject.transform.position.x,wizard.transform.position.y);
+                wizard.GetComponent<PlayerMovement>().facingRight = facingRight;
+                wizard.transform.rotation = transform.rotation;
                 ChangeAnimationState(IDLE);
                 this.gameObject.SetActive(false);
                 wizard.SetActive(true);
