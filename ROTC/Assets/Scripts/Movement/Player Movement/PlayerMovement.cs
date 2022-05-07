@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public GameObject warrior;
-    public GameObject archer;
-    public GameObject wizard;
-
     [Header("Health")]
     public Health playerHealth;
 
@@ -49,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
     protected virtual void Update()
     {
         InputProcess();//Gets input values about jumping and moving.  
-        ChangeCharacter();
     }
 
     protected virtual void FixedUpdate()
@@ -86,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(groundCheck.position,new Vector2(0.8f,checkRadius));
     }
 
-    protected void ChangeAnimationState(string newState)
+    public void ChangeAnimationState(string newState)
     {
         if(currentState == newState)
         {
@@ -96,46 +91,26 @@ public class PlayerMovement : MonoBehaviour
         currentState = newState;
     }
 
-
-    protected void ChangeCharacter()
-    {
-        if(isGrounded)
-        {
-            if(Input.GetKeyDown(KeyCode.Alpha1) && !warrior.activeInHierarchy)
-            {
-                warrior.transform.position = new Vector2(this.gameObject.transform.position.x,warrior.transform.position.y);
-                warrior.GetComponent<PlayerMovement>().facingRight = facingRight;
-                warrior.transform.rotation = transform.rotation;
-                ChangeAnimationState(IDLE);
-                this.gameObject.SetActive(false);
-                warrior.SetActive(true);
-            }
-            else if(Input.GetKeyDown(KeyCode.Alpha2) && !archer.activeInHierarchy)
-            {
-                archer.transform.position = new Vector2(this.gameObject.transform.position.x,archer.transform.position.y);
-                archer.GetComponent<PlayerMovement>().facingRight = facingRight;
-                archer.transform.rotation = transform.rotation;
-                ChangeAnimationState(IDLE);
-                this.gameObject.SetActive(false);
-                archer.SetActive(true);
-            }
-            else if(Input.GetKeyDown(KeyCode.Alpha3) && !wizard.activeInHierarchy)
-            {
-                wizard.transform.position = new Vector2(this.gameObject.transform.position.x,wizard.transform.position.y);
-                wizard.GetComponent<PlayerMovement>().facingRight = facingRight;
-                wizard.transform.rotation = transform.rotation;
-                ChangeAnimationState(IDLE);
-                this.gameObject.SetActive(false);
-                wizard.SetActive(true);
-            }
-        }
-    }
-
     public void Damage(int damage)
     {
         if(playerHealth.Damage(damage))
         {
             isDeath = true;
         }
+    }
+
+    public bool getIsGrounded()
+    {
+        return isGrounded;
+    }
+
+    public bool getFacingRight()
+    {
+        return facingRight;
+    }
+
+    public void setFacingRight(bool val)
+    {
+        facingRight = val;
     }
 }
