@@ -71,7 +71,11 @@ public class ArcherMovement : PlayerMovement
 
     private void ChangeAnimations()
     {
-        if(isStartStreching)
+        if(isDeath)
+        {
+            ChangeAnimationState(DEATH);
+        }
+        else if(isStartStreching)
         {
             ChangeAnimationState(ATTACK);
             isStartStreching = false;

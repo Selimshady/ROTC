@@ -40,7 +40,11 @@ public class WizardMovement : PlayerMovement
 
     private void ChangeAnimations()
     {
-        if(isAttacking)
+        if(isDeath)
+        {
+            ChangeAnimationState(DEATH);
+        }
+        else if(isAttacking)
         {
             ChangeAnimationState(ATTACK);
         }

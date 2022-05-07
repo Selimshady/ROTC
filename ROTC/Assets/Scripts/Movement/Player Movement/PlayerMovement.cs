@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     protected bool facingRight; // For animation 
     protected bool isGrounded; // to reset jumpCount
     protected bool isJumping; // To make character jump
+    protected bool isGettingHit; // Check if get damage
+    protected bool isDeath; // to check if the player is dead.
 
     //Animation States;
     protected const string IDLE = "Idle";
@@ -35,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     protected const string JUMP = "Jump";
     protected const string RUN = "Run";
     protected const string ATTACK = "Attack";
+    protected const string HIT = "GetHit";
+    protected const string DEATH = "Death";
 
     protected void Awake() 
     {
@@ -124,6 +128,14 @@ public class PlayerMovement : MonoBehaviour
                 this.gameObject.SetActive(false);
                 wizard.SetActive(true);
             }
+        }
+    }
+
+    public void Damage(int damage)
+    {
+        if(playerHealth.Damage(damage))
+        {
+            isDeath = true;
         }
     }
 }

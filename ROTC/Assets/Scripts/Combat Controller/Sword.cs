@@ -6,9 +6,9 @@ public class Sword : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.gameObject.TryGetComponent<Health>(out Health playerHealth))
+        if(other.gameObject.TryGetComponent<EnemyMovement>(out EnemyMovement enemyMovement))
         {
-            playerHealth.Damage(2);
+            enemyMovement.Damage(2);
         }
     }
 }

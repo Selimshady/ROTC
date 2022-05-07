@@ -87,7 +87,11 @@ public class WarriorMovement : PlayerMovement
 
     private void ChangeAnimations()
     {
-        if(isBlockPressed)
+        if(isDeath)
+        {
+            ChangeAnimationState(DEATH);
+        }
+        else if(isBlockPressed)
         {
             if(!isBlocking)
             {

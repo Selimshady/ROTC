@@ -15,10 +15,14 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public int Damage(int damage)
+    public bool Damage(int damage)
     {
         currentHealth-=damage;
-        return currentHealth;
+        if(currentHealth <= 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     public void Heal(int itemHealth)
