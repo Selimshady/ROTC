@@ -140,11 +140,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5853695088927445665, guid: effd6d164e5a97e4eb29d8cd814084f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 5853695088927445665, guid: effd6d164e5a97e4eb29d8cd814084f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.173
       objectReference: {fileID: 0}
     - target: {fileID: 5853695088927445665, guid: effd6d164e5a97e4eb29d8cd814084f5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -336,7 +336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1410644740968784637, guid: 7d4f608a07ecedb4c80bdd7ba7bc7b4a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.87
       objectReference: {fileID: 0}
     - target: {fileID: 1410644740968784637, guid: 7d4f608a07ecedb4c80bdd7ba7bc7b4a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -444,7 +444,9 @@ MonoBehaviour:
   warrior: {fileID: 445310852}
   archer: {fileID: 632452946}
   wizard: {fileID: 2008410527}
-  effect: {fileID: 7907932819117825415, guid: 1822f48e00a9dfb4eb4e67de804c9b55, type: 3}
+  warriorEffect: {fileID: 7907932819117825415, guid: 9bc64d927f525e14c805d283e46ac969, type: 3}
+  archerEffect: {fileID: 7907932819117825415, guid: 64f1668f54f1fe749bafda557d7689f2, type: 3}
+  wizardEffect: {fileID: 7907932819117825415, guid: 5ec3484f2234ec440b5c09fcdb7d8591, type: 3}
 --- !u!1 &845843043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,7 +1062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2846300626543273838, guid: 92a634401367da24c9b165f9e7d0396c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 2846300626543273838, guid: 92a634401367da24c9b165f9e7d0396c, type: 3}
       propertyPath: m_LocalPosition.y

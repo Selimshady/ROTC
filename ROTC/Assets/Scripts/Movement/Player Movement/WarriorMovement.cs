@@ -146,4 +146,9 @@ public class WarriorMovement : PlayerMovement
             isAttacking = false;
         }
     }
+
+    public bool getIsAttacking()
+    {
+        return isAttacking;
+    }
 }

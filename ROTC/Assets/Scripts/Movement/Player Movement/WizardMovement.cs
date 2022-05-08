@@ -92,4 +92,9 @@ public class WizardMovement : PlayerMovement
         Destroy(ball,2f);
     }
 
+    public bool getIsAttacking()
+    {
+        return isAttacking;
+    }
+
 }

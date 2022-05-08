@@ -12,6 +12,7 @@ public class ArcherMovement : PlayerMovement
     private bool isReleased;
     private bool isHolding;
     private bool shotEnabled;
+    private bool isAttacking;
 
     protected void Start()
     {
@@ -37,6 +38,7 @@ public class ArcherMovement : PlayerMovement
             isStartStreching = true;
             isReleased = false;
             isHolding = true;
+            isAttacking = true;
         }
         if(Input.GetMouseButtonUp(0))
         {
@@ -110,6 +112,7 @@ public class ArcherMovement : PlayerMovement
     {
         shotEnabled = true;
         isReleased = true;
+        isAttacking = false;
     }
 
     public void holdBowStreched()
@@ -118,4 +121,8 @@ public class ArcherMovement : PlayerMovement
             animator.speed = 0;
     }
 
+    public bool getIsAttacking()
+    {
+        return isAttacking;
+    }
 }
