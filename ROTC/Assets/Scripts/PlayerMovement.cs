@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Basic Movement")]
     public float moveSpeed;  // Character speed
     public float jumpForce; // The indicator of how much the character can jump
-    public Transform ceilingCheck; 
+    public Transform ceilingCheck;
     public Transform groundCheck;
     public LayerMask groundObjects; // Where can character reset its jumpCount
     public float checkRadius; //To understand if character is grounded
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     protected const string RUN = "Run";
     protected const string ATTACK = "Attack";
 
-    protected void Awake() 
+    protected void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Start()// Start is called before the first frame update
     {
-        facingRight = true;   
+        facingRight = true;
     }
 
     protected virtual void Update()
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     protected virtual void InputProcess()
     {
         moveDirection = Input.GetAxis("Horizontal"); // Returns an int between [-1,+1] as depending on input.
-        if(Input.GetButtonDown("Jump") && isGrounded) //Returns bool.
+        if (Input.GetButtonDown("Jump") && isGrounded) //Returns bool.
         {
             isJumping = true;
         }
@@ -68,26 +68,26 @@ public class PlayerMovement : MonoBehaviour
 
     protected void FlipCharacter()
     {
-        if((moveDirection > 0 && !facingRight) || (moveDirection < 0 && facingRight))
+        if ((moveDirection > 0 && !facingRight) || (moveDirection < 0 && facingRight))
         {
-            facingRight =!facingRight;
-            transform.Rotate(0f,180f,0f);
+            facingRight = !facingRight;
+            transform.Rotate(0f, 180f, 0f);
         }
     }
 
     protected void CheckGround()
     {
-        isGrounded = Physics2D.OverlapBox(groundCheck.position,new Vector2(0.7f,checkRadius),0f,groundObjects);
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.7f, checkRadius), 0f, groundObjects);
     }
 
-    protected void OnDrawGizmos() 
+    protected void OnDrawGizmos()
     { // to be able to see the groundCheck radius
-        Gizmos.DrawWireCube(groundCheck.position,new Vector2(0.8f,checkRadius));
+        Gizmos.DrawWireCube(groundCheck.position, new Vector2(0.8f, checkRadius));
     }
 
     protected void ChangeAnimationState(string newState)
     {
-        if(currentState == newState)
+        if (currentState == newState)
         {
             return;
         }
@@ -98,25 +98,25 @@ public class PlayerMovement : MonoBehaviour
 
     protected void ChangeCharacter()
     {
-        if(isGrounded)
+        if (isGrounded)
         {
-            if(Input.GetKeyDown(KeyCode.Alpha1) && !warrior.activeInHierarchy)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !warrior.activeInHierarchy)
             {
-                warrior.transform.position = new Vector2(this.gameObject.transform.position.x,warrior.transform.position.y);
+                warrior.transform.position = new Vector2(this.gameObject.transform.position.x, warrior.transform.position.y);
                 ChangeAnimationState(IDLE);
                 this.gameObject.SetActive(false);
                 warrior.SetActive(true);
             }
-            else if(Input.GetKeyDown(KeyCode.Alpha2) && !archer.activeInHierarchy)
+            else if (Input.GetKeyDown(KeyCode.Alpha2) && !archer.activeInHierarchy)
             {
-                archer.transform.position = new Vector2(this.gameObject.transform.position.x,archer.transform.position.y);
+                archer.transform.position = new Vector2(this.gameObject.transform.position.x, archer.transform.position.y);
                 ChangeAnimationState(IDLE);
                 this.gameObject.SetActive(false);
                 archer.SetActive(true);
             }
-            else if(Input.GetKeyDown(KeyCode.Alpha3) && !wizard.activeInHierarchy)
+            else if (Input.GetKeyDown(KeyCode.Alpha3) && !wizard.activeInHierarchy)
             {
-                wizard.transform.position = new Vector2(this.gameObject.transform.position.x,wizard.transform.position.y);
+                wizard.transform.position = new Vector2(this.gameObject.transform.position.x, wizard.transform.position.y);
                 ChangeAnimationState(IDLE);
                 this.gameObject.SetActive(false);
                 wizard.SetActive(true);

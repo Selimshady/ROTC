@@ -122,10 +122,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.049416542, y: 0.68583536}
+  m_Offset: {x: -0.049416542, y: -0.14736623}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 3.125, y: 1.71875}
     newSize: {x: 3.125, y: 1.71875}
     adaptiveTilingThreshold: 0.5
@@ -133,7 +133,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7388773, y: 1.2469234}
+  m_Size: {x: 0.7388773, y: 1.3016559}
   m_EdgeRadius: 0
 --- !u!114 &1410644740968784634
 MonoBehaviour:
@@ -147,6 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1baec37646737a42bfae45ef7562ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  warrior: {fileID: 1410644740968784639}
+  archer: {fileID: 0}
+  wizard: {fileID: 0}
   moveSpeed: 5
   jumpForce: 5
   ceilingCheck: {fileID: 1410644741979927979}
@@ -154,7 +157,7 @@ MonoBehaviour:
   groundObjects:
     serializedVersion: 2
     m_Bits: 64
-  checkRadius: 0.03
+  checkRadius: 0.1
   maxAttackCoolDown: 0.4
   maxBlockTimer: 0.2
 --- !u!95 &1410644740968784633
@@ -200,7 +203,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410644741979927980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.301, z: 0}
+  m_LocalPosition: {x: 0, y: 0.422, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410644740968784637}
@@ -230,7 +233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410644742172737256}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.065, y: 0.068, z: 0}
+  m_LocalPosition: {x: -0.073, y: -0.766, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410644740968784637}
