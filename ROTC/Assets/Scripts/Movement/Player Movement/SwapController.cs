@@ -8,6 +8,7 @@ public class SwapController : MonoBehaviour
     public GameObject warrior;
     public GameObject archer;
     public GameObject wizard;
+    public Cinemachine.CinemachineVirtualCamera cinemachine;
 
     [Header("Effects")]
     public ParticleSystem warriorEffect;
@@ -15,6 +16,8 @@ public class SwapController : MonoBehaviour
     public ParticleSystem wizardEffect;
 
     private GameObject active;
+    
+
 
     private void Start()
     {
@@ -64,6 +67,7 @@ public class SwapController : MonoBehaviour
                 active = wizard;
                 Instantiate(wizardEffect,active.transform.position + new Vector3(0,0,-1f),Quaternion.identity).transform.parent = active.transform;
             }
+            cinemachine.Follow = active.transform;
         }
     }
 

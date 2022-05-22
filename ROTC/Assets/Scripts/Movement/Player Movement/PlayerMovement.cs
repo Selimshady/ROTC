@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     protected const string HIT = "GetHit";
     protected const string DEATH = "Death";
 
-    protected void Awake() 
+    protected virtual void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapBox(groundCheck.position,new Vector2(0.7f,checkRadius),0f,groundObjects);
     }
 
-    protected void OnDrawGizmos() 
+    protected virtual void OnDrawGizmos() 
     { // to be able to see the groundCheck radius
         Gizmos.DrawWireCube(groundCheck.position,new Vector2(0.8f,checkRadius));
     }
