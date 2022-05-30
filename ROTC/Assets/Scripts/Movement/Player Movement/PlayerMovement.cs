@@ -47,8 +47,13 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Start() 
     {
-        moveSpeed = States.instance.getSpeed();
         //skeletons = States.instance.getSkeletons();
+        moveSpeed = States.instance.getSpeed();
+    }
+
+    private void OnEnable() 
+    {
+        moveSpeed = States.instance.getSpeed();
     }
 
     protected virtual void Update()
@@ -123,10 +128,12 @@ public class PlayerMovement : MonoBehaviour
         facingRight = val;
     }
 
-
     public void upgradeSpeed()
     {
-        moveSpeed++;
-        States.instance.setSpeed(moveSpeed);
+        if(this.gameObject.activeInHierarchy)
+        {
+            moveSpeed++;
+            States.instance.setSpeed(moveSpeed);
+        }
     }
 }

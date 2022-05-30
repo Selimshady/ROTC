@@ -5,7 +5,9 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     int damage;
-    private void Awake() {
+
+    private void Start() 
+    {
         damage = States.instance.getDamage();
     }
     private void OnTriggerEnter2D(Collider2D other) 
@@ -16,7 +18,7 @@ public class Sword : MonoBehaviour
         }
     }
 
-        public void upgradeDamage()
+    public void upgradeDamage()
     {
         damage++;
         States.instance.setDamage(damage);

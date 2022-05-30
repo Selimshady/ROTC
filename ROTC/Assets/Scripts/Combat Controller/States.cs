@@ -22,9 +22,10 @@ public class States : MonoBehaviour
     [Header("Skill Cooldown")] 
     private float cooldown; // done
 
-    private void Awake() {
-        loadData();
+    private void Awake()
+    {
         instance = this;
+        loadData();
     }
 
     public void saveData()
@@ -40,8 +41,8 @@ public class States : MonoBehaviour
 
     public void loadData()
     {
-        maxHealth = PlayerPrefs.GetInt("maxHealth",4);
-        currentHealth = PlayerPrefs.GetInt("currentHealth",4);
+        maxHealth = PlayerPrefs.GetInt("maxHealth",2);
+        currentHealth = PlayerPrefs.GetInt("currentHealth",2);
         Damage = PlayerPrefs.GetInt("Damage",1);
         level = PlayerPrefs.GetInt("level",1);
         skulls = PlayerPrefs.GetInt("skeletons",0);
@@ -84,7 +85,6 @@ public class States : MonoBehaviour
         return cooldown;
     }
 
-
     public void setMaxHealth(int health)
     {
         maxHealth = health;
@@ -119,6 +119,4 @@ public class States : MonoBehaviour
     {
         this.cooldown = cooldown;
     }
-
-
 }
