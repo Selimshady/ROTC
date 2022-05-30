@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     protected float moveDirection; //For animation
 
     [Header("Basic Movement")]
-    public float moveSpeed;  // Character speed
+    protected float moveSpeed;  // Character speed
     public float jumpForce; // The indicator of how much the character can jump
     public Transform ceilingCheck; 
     public Transform groundCheck;
@@ -36,14 +36,25 @@ public class PlayerMovement : MonoBehaviour
     protected const string HIT = "GetHit";
     protected const string DEATH = "Death";
 
+    [Header("Collectable")]
+    protected int skeletons;
+
     protected virtual void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
+    protected virtual void Start() 
+    {
+        //skeletons = States.instance.getSkeletons();
+        //moveSpeed = States.instance.getSpeed();
+        moveSpeed = 5f;
+    }
+
     protected virtual void Update()
     {
+        Debug.Log(moveSpeed);
         InputProcess();//Gets input values about jumping and moving.  
     }
 
@@ -112,5 +123,11 @@ public class PlayerMovement : MonoBehaviour
     public void setFacingRight(bool val)
     {
         facingRight = val;
+    }
+
+
+    public void upgradeSpeed()
+    {
+        moveSpeed++;
     }
 }

@@ -5,14 +5,21 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int currentHealth; 
+    private int currentHealth; 
 
-    public int maxHealth;
+    private int maxHealth;
 
     // Start is called before the first frame update
     private void Start()
     {
-        currentHealth = maxHealth;
+        //maxHealth = States.instance.getMaxHealth();
+        //currentHealth = States.instance.getCurrentHealth();
+        maxHealth = 4;
+        currentHealth = maxHealth;  
+    }
+
+    private void Update() {
+        Debug.Log(currentHealth + " " + maxHealth);
     }
 
     public bool Damage(int damage)
@@ -55,5 +62,11 @@ public class Health : MonoBehaviour
     public int getMaxHealth()
     {
         return maxHealth;
+    }
+
+    public void upgradeHealth()
+    {
+        maxHealth++;
+        currentHealth = maxHealth;
     }
 }

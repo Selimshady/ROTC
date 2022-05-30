@@ -16,8 +16,6 @@ public class SwapController : MonoBehaviour
     public ParticleSystem wizardEffect;
 
     private GameObject active;
-    
-
 
     private void Start()
     {

@@ -18,12 +18,12 @@ public class WizardMovement : PlayerMovement
     private Camera cam;
     public GameObject teleportRangeCenter;
     public LayerMask teleportLayer;
-    public GameObject teleportPoint;
 
 
     protected override void Awake() 
     {
         base.Awake();
+        //teleportCooldown = States.instance.getCooldown();
         teleportCooldown = 4f;
         timer = teleportCooldown;
         cam = Camera.main;
@@ -150,5 +150,10 @@ public class WizardMovement : PlayerMovement
     public bool getIsAttacking()
     {
         return isAttacking;
+    }
+
+    public void upgradeCooldown()
+    {
+        teleportCooldown--;
     }
 }

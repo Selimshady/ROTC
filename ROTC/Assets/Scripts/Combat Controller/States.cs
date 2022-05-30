@@ -4,40 +4,121 @@ using UnityEngine;
 
 public class States : MonoBehaviour
 {
-    [Header("Health")]
-    private int maxHealth;
-    private int currentHealth;
 
-    [Header("Weapons")]
-    private int swordDamage;
-    private int arrowDamage;
-    private int fireballDamage;
+    public static States instance;
+
+    [Header("Health")]
+    private int maxHealth; // done
+    private int currentHealth; // done
 
     [Header("Level")]
     private int level;
 
-    [Header("Collectible")]
-    private int skeletons;
+    [Header("Player")]
+    private float speed; // done
+    private int Damage; // done
+    private int skeletons; // done
+
+    [Header("Skill Cooldown")] 
+    private float cooldown; // done
+
+    private void Start() 
+    {
+        instance = this;
+    }
 
     public void saveData()
     {
         PlayerPrefs.SetInt("maxHealth",maxHealth);
         PlayerPrefs.SetInt("currentHealth",currentHealth);
-        PlayerPrefs.SetInt("swordDamage",swordDamage);
-        PlayerPrefs.SetInt("arrowDamage",arrowDamage);
-        PlayerPrefs.SetInt("fireballDamage",fireballDamage);
+        PlayerPrefs.SetInt("Damage",Damage);
         PlayerPrefs.SetInt("level",level);
         PlayerPrefs.SetInt("skeletons",skeletons);
+        PlayerPrefs.SetFloat("speed",speed);
+        PlayerPrefs.SetFloat("cooldwon",cooldown);
     }
 
     public void loadData()
     {
-        maxHealth = PlayerPrefs.GetInt("maxHealth");
-        currentHealth = PlayerPrefs.GetInt("currentHealth");
-        swordDamage = PlayerPrefs.GetInt("swordDamage");
-        arrowDamage = PlayerPrefs.GetInt("arrowDamage");
-        fireballDamage = PlayerPrefs.GetInt("fireballDamage");
-        level = PlayerPrefs.GetInt("level");
-        skeletons = PlayerPrefs.GetInt("skeletons");
+        maxHealth = PlayerPrefs.GetInt("maxHealth",4);
+        currentHealth = PlayerPrefs.GetInt("currentHealth",4);
+        Damage = PlayerPrefs.GetInt("Damage",1);
+        level = PlayerPrefs.GetInt("level",1);
+        skeletons = PlayerPrefs.GetInt("skeletons",0);
+        speed = PlayerPrefs.GetFloat("speed",5f);
+        cooldown = PlayerPrefs.GetFloat("cooldown",4f);
     }
+
+    public int getMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public int getCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public int getDamage()
+    {
+        return Damage;
+    }
+
+    public int getLevel()
+    {
+        return level;
+    }
+
+    public int getSkeletons()
+    {
+        return skeletons;
+    }
+
+    public float getSpeed()
+    {
+        return speed;
+    }
+
+    public float getCooldown()
+    {
+        return cooldown;
+    }
+
+
+    public void setMaxHealth(int health)
+    {
+        maxHealth = health;
+    }
+
+    public void setCurrentHealth(int health)
+    {
+        currentHealth = health;
+    }
+
+    public void setDamage(int damage)
+    {
+        Damage = damage;
+    }
+
+    public void setLevel(int level)
+    {
+        this.level = level;
+    }
+
+    public void setSkeletons(int skeletons)
+    {
+        this.skeletons = skeletons;
+    }
+
+    public void setSpeed(float speed)
+    {
+        this.speed = speed; 
+    }
+
+    public void setCooldown(float cooldown)
+    {
+        this.cooldown = cooldown;
+    }
+
+
 }

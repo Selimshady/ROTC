@@ -16,8 +16,10 @@ public class WarriorMovement : PlayerMovement
     [SerializeField] private float maxAttackCoolDown;
     [SerializeField] private float maxBlockTimer;
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
+
         facingRight = true;
     }
 

@@ -162,7 +162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1008821095401284761
 Transform:
   m_ObjectHideFlags: 0
@@ -263,7 +263,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 6862515906178159725}
-  moveSpeed: 5
   jumpForce: 5
   ceilingCheck: {fileID: 1008821095166650448}
   groundCheck: {fileID: 1008821093475348019}
@@ -371,7 +370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5525653068496213267
 Transform:
   m_ObjectHideFlags: 0
@@ -500,7 +499,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 6862515906178159725}
-  moveSpeed: 5
   jumpForce: 5
   ceilingCheck: {fileID: 5525653069230522949}
   groundCheck: {fileID: 5525653069423855881}
@@ -636,8 +634,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d936dd21ee26bad4d97405e787e45823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 10
 --- !u!114 &6862515906178159724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,7 +982,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 6862515906178159725}
-  moveSpeed: 5
   jumpForce: 5
   ceilingCheck: {fileID: 8699998510793991716}
   groundCheck: {fileID: 8699998511684003926}
@@ -1001,4 +996,3 @@ MonoBehaviour:
   teleportLayer:
     serializedVersion: 2
     m_Bits: 128
-  teleportPoint: {fileID: 0}

@@ -14,8 +14,10 @@ public class ArcherMovement : PlayerMovement
     private bool shotEnabled;
     private bool isAttacking;
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
+
         isReleased = true; // Arrow is free to shot.
         shotEnabled = true; // Can shoot.
     }
@@ -58,7 +60,6 @@ public class ArcherMovement : PlayerMovement
         {
             arrow.GetComponent<Rigidbody2D>().velocity = new Vector2(arrowSpeed * -2,arrow.GetComponent<Rigidbody2D>().velocity.y);
         }
-        Destroy(arrow,2f);
     }
 
     private void Move()
