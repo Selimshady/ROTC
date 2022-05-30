@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class WizardMovement : PlayerMovement
 {
+
+    private const string TELEPORT= "Teleport";
+
     [Header("Combat")]
     public GameObject ballPref;
     public Transform spawnPos;
@@ -13,20 +16,25 @@ public class WizardMovement : PlayerMovement
 
     [Header("Teleporting")]
     private bool isSearching;
+    private bool isTeleporting;
     private float teleportCooldown;
     private float timer;
     private Camera cam;
     public GameObject teleportRangeCenter;
     public LayerMask teleportLayer;
+    private Vector2 mousePos;
 
 
     protected override void Awake() 
     {
         base.Awake();
-        //teleportCooldown = States.instance.getCooldown();
-        teleportCooldown = 4f;
-        timer = teleportCooldown;
+        teleportCooldown = States.instance.getCooldown();
         cam = Camera.main;
+    }
+
+    protected override void Start() {
+        base.Start();
+        timer = 0;
     }
     
     protected override void FixedUpdate() 
@@ -41,30 +49,42 @@ public class WizardMovement : PlayerMovement
     protected override void InputProcess()
     {
         base.InputProcess();
-
-        if(Input.GetMouseButtonDown(0) && !isSearching)
+        if(!isTeleporting)
         {
-            isAttacking = true;
-        }
-        if(Input.GetMouseButtonDown(1) && !isAttacking && isGrounded) 
-        {
-            isSearching = true;
-            teleportRangeCenter.GetComponent<SpriteRenderer>().enabled = true;
-        }
-        if(Input.GetMouseButtonUp(1) && isSearching)
-        {
-            Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-            
-            if (Vector2.Distance(mousePos, teleportRangeCenter.transform.position) < 5f && timer <= 0) 
+            if(Input.GetMouseButtonDown(0) && !isSearching)
             {
-                transform.position = new Vector3(mousePos[0],mousePos[1],0f);
-                timer = teleportCooldown;
-                Instantiate(GetComponentInParent<SwapController>().wizardEffect,transform.position,Quaternion.identity);
+                isAttacking = true;
             }
-                    
-            isSearching = false;
-            teleportRangeCenter.GetComponent<SpriteRenderer>().enabled = false;
+            if(Input.GetMouseButtonDown(1) && !isAttacking && isGrounded) 
+            {
+                isSearching = true;
+                teleportRangeCenter.GetComponent<SpriteRenderer>().enabled = true;
+            }
+            if(Input.GetMouseButtonUp(1) && isSearching)
+            {
+                mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+                
+                if (Vector2.Distance(mousePos, teleportRangeCenter.transform.position) < 5f && timer <= 0) 
+                {
+                    isTeleporting = true;
+                }
+                        
+                isSearching = false;
+                teleportRangeCenter.GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
+    }
+
+    public void Teleport()
+    {
+        transform.position = new Vector3(mousePos[0],mousePos[1],0f);
+        timer = teleportCooldown;
+        Instantiate(GetComponentInParent<SwapController>().wizardEffect,transform.position,Quaternion.identity);
+    }
+
+    public void TeleportEnd()
+    {
+        isTeleporting = false;
     }
 
     /*protected virtual void OnDrawGizmos() 
@@ -94,6 +114,10 @@ public class WizardMovement : PlayerMovement
         if(isDeath)
         {
             ChangeAnimationState(DEATH);
+        }
+        else if(isTeleporting)
+        {
+            ChangeAnimationState(TELEPORT);
         }
         else if(isSearching)
         {
@@ -155,5 +179,6 @@ public class WizardMovement : PlayerMovement
     public void upgradeCooldown()
     {
         teleportCooldown--;
+        States.instance.setCooldown(teleportCooldown);
     }
 }

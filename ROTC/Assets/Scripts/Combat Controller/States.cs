@@ -17,13 +17,13 @@ public class States : MonoBehaviour
     [Header("Player")]
     private float speed; // done
     private int Damage; // done
-    private int skeletons; // done
+    private int skulls; // kaldı.
 
     [Header("Skill Cooldown")] 
     private float cooldown; // done
 
-    private void Start() 
-    {
+    private void Awake() {
+        loadData();
         instance = this;
     }
 
@@ -33,7 +33,7 @@ public class States : MonoBehaviour
         PlayerPrefs.SetInt("currentHealth",currentHealth);
         PlayerPrefs.SetInt("Damage",Damage);
         PlayerPrefs.SetInt("level",level);
-        PlayerPrefs.SetInt("skeletons",skeletons);
+        PlayerPrefs.SetInt("skeletons",skulls);
         PlayerPrefs.SetFloat("speed",speed);
         PlayerPrefs.SetFloat("cooldwon",cooldown);
     }
@@ -44,7 +44,7 @@ public class States : MonoBehaviour
         currentHealth = PlayerPrefs.GetInt("currentHealth",4);
         Damage = PlayerPrefs.GetInt("Damage",1);
         level = PlayerPrefs.GetInt("level",1);
-        skeletons = PlayerPrefs.GetInt("skeletons",0);
+        skulls = PlayerPrefs.GetInt("skeletons",0);
         speed = PlayerPrefs.GetFloat("speed",5f);
         cooldown = PlayerPrefs.GetFloat("cooldown",4f);
     }
@@ -71,7 +71,7 @@ public class States : MonoBehaviour
 
     public int getSkeletons()
     {
-        return skeletons;
+        return skulls;
     }
 
     public float getSpeed()
@@ -105,9 +105,9 @@ public class States : MonoBehaviour
         this.level = level;
     }
 
-    public void setSkeletons(int skeletons)
+    public void setSkeletons(int skulls)
     {
-        this.skeletons = skeletons;
+        this.skulls = skulls;
     }
 
     public void setSpeed(float speed)

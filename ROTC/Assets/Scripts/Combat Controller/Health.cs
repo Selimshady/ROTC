@@ -12,14 +12,8 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        //maxHealth = States.instance.getMaxHealth();
-        //currentHealth = States.instance.getCurrentHealth();
-        maxHealth = 4;
-        currentHealth = maxHealth;  
-    }
-
-    private void Update() {
-        Debug.Log(currentHealth + " " + maxHealth);
+        maxHealth = States.instance.getMaxHealth();
+        currentHealth = States.instance.getCurrentHealth();
     }
 
     public bool Damage(int damage)
@@ -68,5 +62,6 @@ public class Health : MonoBehaviour
     {
         maxHealth++;
         currentHealth = maxHealth;
+        States.instance.setMaxHealth(maxHealth);
     }
 }

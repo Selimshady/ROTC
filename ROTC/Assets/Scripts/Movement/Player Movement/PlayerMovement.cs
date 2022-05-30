@@ -47,14 +47,12 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Start() 
     {
+        moveSpeed = States.instance.getSpeed();
         //skeletons = States.instance.getSkeletons();
-        //moveSpeed = States.instance.getSpeed();
-        moveSpeed = 5f;
     }
 
     protected virtual void Update()
-    {
-        Debug.Log(moveSpeed);
+    {       
         InputProcess();//Gets input values about jumping and moving.  
     }
 
@@ -89,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void OnDrawGizmos() 
     { // to be able to see the groundCheck radius
-        Gizmos.DrawWireCube(groundCheck.position,new Vector2(0.8f,checkRadius));
+        Gizmos.DrawWireCube(groundCheck.position,new Vector2(0.7f,checkRadius));
     }
 
     public void ChangeAnimationState(string newState)
@@ -129,5 +127,6 @@ public class PlayerMovement : MonoBehaviour
     public void upgradeSpeed()
     {
         moveSpeed++;
+        States.instance.setSpeed(moveSpeed);
     }
 }

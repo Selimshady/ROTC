@@ -6,8 +6,7 @@ public class Sword : MonoBehaviour
 {
     int damage;
     private void Awake() {
-        //damage = States.instance.getDamage();
-        damage = 1;
+        damage = States.instance.getDamage();
     }
     private void OnTriggerEnter2D(Collider2D other) 
     {
@@ -17,8 +16,9 @@ public class Sword : MonoBehaviour
         }
     }
 
-    public void upgradeDamage()
+        public void upgradeDamage()
     {
         damage++;
+        States.instance.setDamage(damage);
     }
 }
