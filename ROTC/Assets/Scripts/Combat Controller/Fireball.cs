@@ -16,10 +16,4 @@ public class Fireball : MonoBehaviour
             enemyMovement.Damage(damage);
         }
     }
-
-    public void upgradeDamage()
-    {
-        damage++;
-        States.instance.setDamage(damage);
-    }
 }

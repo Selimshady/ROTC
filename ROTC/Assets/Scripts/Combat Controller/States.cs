@@ -8,19 +8,22 @@ public class States : MonoBehaviour
     public static States instance;
 
     [Header("Health")]
-    private int maxHealth; // done
-    private int currentHealth; // done
+    private int maxHealth; 
+    private int currentHealth; 
 
     [Header("Level")]
     private int level;
 
     [Header("Player")]
-    private float speed; // done
-    private int Damage; // done
-    private int skulls; // kaldı.
+    private float speed; 
+    private int Damage; 
+    private int skulls; 
 
     [Header("Skill Cooldown")] 
-    private float cooldown; // done
+    private float cooldown; 
+
+    [Header("Enemy")]
+    private int enemyDamage;
 
     private void Awake()
     {
@@ -34,20 +37,27 @@ public class States : MonoBehaviour
         PlayerPrefs.SetInt("currentHealth",currentHealth);
         PlayerPrefs.SetInt("Damage",Damage);
         PlayerPrefs.SetInt("level",level);
-        PlayerPrefs.SetInt("skeletons",skulls);
+        PlayerPrefs.SetInt("skulls",skulls);
         PlayerPrefs.SetFloat("speed",speed);
         PlayerPrefs.SetFloat("cooldwon",cooldown);
+        PlayerPrefs.SetInt("enemyDamage",enemyDamage);
     }
 
     public void loadData()
     {
-        maxHealth = PlayerPrefs.GetInt("maxHealth",2);
-        currentHealth = PlayerPrefs.GetInt("currentHealth",2);
+        maxHealth = PlayerPrefs.GetInt("maxHealth",5);
+        currentHealth = PlayerPrefs.GetInt("currentHealth",5);
         Damage = PlayerPrefs.GetInt("Damage",1);
         level = PlayerPrefs.GetInt("level",1);
-        skulls = PlayerPrefs.GetInt("skeletons",0);
+        skulls = PlayerPrefs.GetInt("skulls",50);
         speed = PlayerPrefs.GetFloat("speed",5f);
         cooldown = PlayerPrefs.GetFloat("cooldown",4f);
+        enemyDamage = PlayerPrefs.GetInt("enemyDamage",1);
+    }
+
+    public int getEnemyDamage()
+    {
+        return enemyDamage;
     }
 
     public int getMaxHealth()
@@ -70,7 +80,7 @@ public class States : MonoBehaviour
         return level;
     }
 
-    public int getSkeletons()
+    public int getSkulls()
     {
         return skulls;
     }
@@ -83,6 +93,11 @@ public class States : MonoBehaviour
     public float getCooldown()
     {
         return cooldown;
+    }
+
+    public void setEnemyDamage(int enemyDamage)
+    {
+        this.enemyDamage = enemyDamage;
     }
 
     public void setMaxHealth(int health)
@@ -105,7 +120,7 @@ public class States : MonoBehaviour
         this.level = level;
     }
 
-    public void setSkeletons(int skulls)
+    public void setSkulls(int skulls)
     {
         this.skulls = skulls;
     }

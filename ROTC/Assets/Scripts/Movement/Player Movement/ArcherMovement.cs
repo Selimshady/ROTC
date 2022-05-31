@@ -17,7 +17,7 @@ public class ArcherMovement : PlayerMovement
     protected override void Start()
     {
         base.Start();
-
+        
         isReleased = true; // Arrow is free to shot.
         shotEnabled = true; // Can shoot.
     }
@@ -77,6 +77,10 @@ public class ArcherMovement : PlayerMovement
         if(isDeath)
         {
             ChangeAnimationState(DEATH);
+        }
+        else if(isGettingHit)
+        {
+            ChangeAnimationState(HIT);
         }
         else if(isStartStreching)
         {

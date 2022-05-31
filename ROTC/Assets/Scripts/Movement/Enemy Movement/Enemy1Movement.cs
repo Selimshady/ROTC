@@ -35,7 +35,7 @@ public class Enemy1Movement : EnemyMovement
         }
         else
         {
-            ChangeAnimationState(RUN);
+            ChangeAnimationState(ATTACK + "1");
         }
     }
 

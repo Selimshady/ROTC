@@ -115,6 +115,10 @@ public class WizardMovement : PlayerMovement
         {
             ChangeAnimationState(DEATH);
         }
+        else if(isGettingHit)
+        {
+            ChangeAnimationState(HIT);
+        }
         else if(isTeleporting)
         {
             ChangeAnimationState(TELEPORT);
@@ -180,5 +184,6 @@ public class WizardMovement : PlayerMovement
     {
         teleportCooldown--;
         States.instance.setCooldown(teleportCooldown);
+        Collection.instance.updateSkulls(-10);
     }
 }

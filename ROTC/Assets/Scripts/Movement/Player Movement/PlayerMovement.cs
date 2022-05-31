@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     protected const string DEATH = "Death";
 
     [Header("Collectable")]
-    protected int skeletons;
+    protected int skulls;
 
     protected virtual void Awake() 
     {
@@ -47,18 +47,20 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Start() 
     {
-        //skeletons = States.instance.getSkeletons();
+        skulls = States.instance.getSkulls();
         moveSpeed = States.instance.getSpeed();
     }
 
     private void OnEnable() 
     {
-        moveSpeed = States.instance.getSpeed();
+        if(States.instance != null)
+            moveSpeed = States.instance.getSpeed();
     }
 
     protected virtual void Update()
     {       
-        InputProcess();//Gets input values about jumping and moving.  
+        if(!isDeath)
+            InputProcess();//Gets input values about jumping and moving.  
     }
 
     protected virtual void FixedUpdate()
@@ -107,10 +109,24 @@ public class PlayerMovement : MonoBehaviour
 
     public void Damage(int damage)
     {
-        if(playerHealth.Damage(damage))
+        if(!isGettingHit)
         {
-            isDeath = true;
+            isGettingHit = true;
+            if(playerHealth.Damage(damage))
+            {
+                isDeath = true;
+            }
         }
+    }
+
+    public void EndOfHit()
+    {
+        isGettingHit = false;
+    }
+
+    public bool getIsDeath()
+    {
+        return isDeath;
     }
 
     public bool getIsGrounded()
@@ -134,6 +150,19 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed++;
             States.instance.setSpeed(moveSpeed);
+            skulls-=10;
         }
+    }
+
+    public int getSkulls()
+    {
+        return skulls;
+    }
+
+
+    public void updateSkulls(int gain)
+    {
+        skulls+=gain;
+        NpcInteraction.instance.UpdateUI();
     }
 }
