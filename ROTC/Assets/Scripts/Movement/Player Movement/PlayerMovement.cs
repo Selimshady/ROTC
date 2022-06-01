@@ -36,9 +36,6 @@ public class PlayerMovement : MonoBehaviour
     protected const string HIT = "GetHit";
     protected const string DEATH = "Death";
 
-    [Header("Collectable")]
-    protected int skulls;
-
     protected virtual void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
@@ -47,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Start() 
     {
-        skulls = States.instance.getSkulls();
         moveSpeed = States.instance.getSpeed();
     }
 
@@ -150,19 +146,8 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed++;
             States.instance.setSpeed(moveSpeed);
-            skulls-=10;
+            Collection.instance.updateSkulls(-10);
         }
     }
 
-    public int getSkulls()
-    {
-        return skulls;
-    }
-
-
-    public void updateSkulls(int gain)
-    {
-        skulls+=gain;
-        NpcInteraction.instance.UpdateUI();
-    }
 }
