@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -54,10 +55,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     protected virtual void Update()
-    {       
-        if(!isDeath && NpcInteraction.inputAvailable)
-            InputProcess();//Gets input values about jumping and moving.
-        else
+    {   
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+            if(NpcInteraction.inputAvailable)
+                InputProcess();//Gets input values about jumping and moving.
+            else
+                moveDirection = 0;
+        else if(!isDeath)
+            InputProcess();
+        else 
             moveDirection = 0;
     }
 

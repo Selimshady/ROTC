@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SwapController : MonoBehaviour
 {
@@ -25,10 +26,18 @@ public class SwapController : MonoBehaviour
         active = warrior;   
     }
 
+    
     private void Update() 
     {
-        if(!active.GetComponent<PlayerMovement>().getIsDeath() && NpcInteraction.inputAvailable)
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            if(NpcInteraction.inputAvailable)
+                ChangeCharacter();
+        }
+        else if(!active.GetComponent<PlayerMovement>().getIsDeath())
+        {
             ChangeCharacter();
+        }   
     }
 
 
