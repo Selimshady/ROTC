@@ -58,7 +58,6 @@ public class EnemyMovement : MonoBehaviour
     {
         if(enemyHealth.Damage(damage))
         {
-            Debug.Log("Öldü");
             GetComponent<Rigidbody2D>().simulated = false;
             isDeath = true;
         }

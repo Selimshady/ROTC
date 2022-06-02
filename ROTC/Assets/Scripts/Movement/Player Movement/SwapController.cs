@@ -27,7 +27,8 @@ public class SwapController : MonoBehaviour
 
     private void Update() 
     {
-        ChangeCharacter();
+        if(!active.GetComponent<PlayerMovement>().getIsDeath() && NpcInteraction.inputAvailable)
+            ChangeCharacter();
     }
 
 

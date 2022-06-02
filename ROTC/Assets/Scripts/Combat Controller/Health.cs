@@ -6,7 +6,6 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     private int currentHealth; 
-
     private int maxHealth;
 
     // Start is called before the first frame update
@@ -63,5 +62,7 @@ public class Health : MonoBehaviour
         maxHealth++;
         currentHealth = maxHealth;
         States.instance.setMaxHealth(maxHealth);
+        States.instance.setCurrentHealth(currentHealth);
+        Collection.instance.updateSkulls(-10);
     }
 }

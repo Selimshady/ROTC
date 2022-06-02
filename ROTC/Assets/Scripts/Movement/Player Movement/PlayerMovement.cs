@@ -36,9 +36,6 @@ public class PlayerMovement : MonoBehaviour
     protected const string HIT = "GetHit";
     protected const string DEATH = "Death";
 
-    [Header("Collectable")]
-    protected int skeletons;
-
     protected virtual void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
@@ -47,18 +44,21 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Start() 
     {
-        //skeletons = States.instance.getSkeletons();
         moveSpeed = States.instance.getSpeed();
     }
 
     private void OnEnable() 
     {
-        moveSpeed = States.instance.getSpeed();
+        if(States.instance != null)
+            moveSpeed = States.instance.getSpeed();
     }
 
     protected virtual void Update()
     {       
-        InputProcess();//Gets input values about jumping and moving.  
+        if(!isDeath && NpcInteraction.inputAvailable)
+            InputProcess();//Gets input values about jumping and moving.
+        else
+            moveDirection = 0;
     }
 
     protected virtual void FixedUpdate()
@@ -107,10 +107,24 @@ public class PlayerMovement : MonoBehaviour
 
     public void Damage(int damage)
     {
-        if(playerHealth.Damage(damage))
+        if(!isGettingHit)
         {
-            isDeath = true;
+            isGettingHit = true;
+            if(playerHealth.Damage(damage))
+            {
+                isDeath = true;
+            }
         }
+    }
+
+    public void EndOfHit()
+    {
+        isGettingHit = false;
+    }
+
+    public bool getIsDeath()
+    {
+        return isDeath;
     }
 
     public bool getIsGrounded()
@@ -134,6 +148,8 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed++;
             States.instance.setSpeed(moveSpeed);
+            Collection.instance.updateSkulls(-10);
         }
     }
+
 }

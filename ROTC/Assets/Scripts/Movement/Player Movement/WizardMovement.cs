@@ -40,7 +40,6 @@ public class WizardMovement : PlayerMovement
     protected override void FixedUpdate() 
     {
         base.FixedUpdate();
-
         Move();
         ChangeAnimations();
         timer-=Time.fixedDeltaTime;
@@ -115,6 +114,10 @@ public class WizardMovement : PlayerMovement
         {
             ChangeAnimationState(DEATH);
         }
+        else if(isGettingHit)
+        {
+            ChangeAnimationState(HIT);
+        }
         else if(isTeleporting)
         {
             ChangeAnimationState(TELEPORT);
@@ -180,5 +183,6 @@ public class WizardMovement : PlayerMovement
     {
         teleportCooldown--;
         States.instance.setCooldown(teleportCooldown);
+        Collection.instance.updateSkulls(-10);
     }
 }

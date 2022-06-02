@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
 
 public class NpcInteraction : MonoBehaviour
 {
@@ -9,6 +11,20 @@ public class NpcInteraction : MonoBehaviour
     public KeyCode interactKey;
     public UnityEvent interactAction;
     public GameObject canvas;
+
+    public Button[] buttons;
+    public TMP_Text skullsText;
+
+    public static NpcInteraction instance;
+
+    public static bool inputAvailable;
+
+
+    private void Start() 
+    {
+        instance = this;
+        inputAvailable = true;
+    }
 
     // Update is called once per frame
     void Update()
@@ -18,11 +34,14 @@ public class NpcInteraction : MonoBehaviour
             if(Input.GetKeyDown(interactKey))
             {
                 interactAction.Invoke();
+                UpdateUI();
+                inputAvailable = false;
             }
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             canvas.SetActive(false);
+            inputAvailable = true;
         }
     }
 
@@ -31,7 +50,6 @@ public class NpcInteraction : MonoBehaviour
         if(other.gameObject.GetComponent<PlayerMovement>())
         {
             isInRange = true;
-            Debug.Log("Player now is in range");
         }    
     }
 
@@ -39,13 +57,31 @@ public class NpcInteraction : MonoBehaviour
         if(other.gameObject.GetComponent<PlayerMovement>())
         {
             isInRange = false;
-            Debug.Log("Player is now out of range");
         }    
     }
 
     public void OpenSelectionMenu()
     { 
         canvas.SetActive(true);
-        Debug.Log("menu is open now");
+    }
+
+    public void UpdateUI()
+    {
+        int totalSkulls = Collection.instance.getSkulls();
+        skullsText.SetText(totalSkulls.ToString());
+        if(totalSkulls < 10)
+        {
+            for(int i=0;i<buttons.Length;i++)
+            {
+                buttons[i].interactable = false;
+            }
+        }
+        else
+        {
+            for(int i=0;i<buttons.Length;i++)
+            {
+                buttons[i].interactable = true;
+            }
+        }
     }
 }

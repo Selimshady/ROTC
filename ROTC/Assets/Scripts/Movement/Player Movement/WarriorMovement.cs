@@ -93,6 +93,10 @@ public class WarriorMovement : PlayerMovement
         {
             ChangeAnimationState(DEATH);
         }
+        else if(isGettingHit)
+        {
+            ChangeAnimationState(HIT);
+        }
         else if(isBlockPressed)
         {
             if(!isBlocking)
