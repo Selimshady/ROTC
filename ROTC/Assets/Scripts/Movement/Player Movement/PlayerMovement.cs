@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Update()
     {   
-        if(SceneManager.GetActiveScene().buildIndex == 0)
+        if(SceneManager.GetActiveScene().name.Equals("Main Level"))
             if(NpcInteraction.inputAvailable)
                 InputProcess();//Gets input values about jumping and moving.
             else

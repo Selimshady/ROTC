@@ -29,7 +29,7 @@ public class SwapController : MonoBehaviour
     
     private void Update() 
     {
-        if(SceneManager.GetActiveScene().buildIndex == 0)
+        if(SceneManager.GetActiveScene().name.Equals("Main Level"))
         {
             if(NpcInteraction.inputAvailable)
                 ChangeCharacter();

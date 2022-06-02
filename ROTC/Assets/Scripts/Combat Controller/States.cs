@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class States : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class States : MonoBehaviour
     {
         instance = this;
         loadData();
+    }
+
+    private void Start() {
+        level = SceneManager.GetActiveScene().buildIndex;
     }
 
     public void saveData()

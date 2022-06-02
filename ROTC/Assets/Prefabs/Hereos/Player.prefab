@@ -536,7 +536,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &359033034
 MonoBehaviour:
@@ -771,7 +771,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: b113e7ac260df4c41bd2a81ee715817f, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &5525653068496213266
 BoxCollider2D:
@@ -873,7 +873,7 @@ MonoBehaviour:
   - {x: -0.22903252, y: -0.21213937, z: 0}
   m_ShapePathHash: 140191669
   m_Mesh: {fileID: 0}
-  m_InstanceId: -825712
+  m_InstanceId: -100364
 --- !u!1 &6862515906178159723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1243,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: b113e7ac260df4c41bd2a81ee715817f, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &8699998512627062836
 BoxCollider2D:
