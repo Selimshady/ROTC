@@ -40,11 +40,14 @@ public class NpcInteraction : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            canvas.SetActive(false);
-            inputAvailable = true;
+            CloseUpgradeMenu();
         }
     }
-
+    public void CloseUpgradeMenu()
+    {
+        canvas.SetActive(false);
+        inputAvailable = true;
+    }
     
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.GetComponent<PlayerMovement>())
