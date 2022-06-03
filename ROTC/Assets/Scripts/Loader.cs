@@ -9,11 +9,18 @@ public class Loader : MonoBehaviour
     {
         if(other.GetComponent<PlayerMovement>())
         {
-            States.instance.saveData();
+            States.instance.setLevel(1 - SceneManager.GetActiveScene().buildIndex);
             if(SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                States.instance.setSkulls(States.instance.getSkulls() + 10);
+                States.instance.saveData();
                 SceneManager.LoadScene(1);
+            }
             else if(SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                States.instance.saveData();
                 SceneManager.LoadScene(0);
+            }
         }
     }
 }
