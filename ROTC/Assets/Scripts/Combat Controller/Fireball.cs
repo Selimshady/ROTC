@@ -5,8 +5,10 @@ using UnityEngine;
 public class Fireball : MonoBehaviour
 {
     int damage;
+    public GameObject impactEffect;
 
-    private void Start() {
+    private void Start() 
+    {
         damage = States.instance.getDamage();
     }
     private void OnTriggerEnter2D(Collider2D other) 
@@ -14,6 +16,15 @@ public class Fireball : MonoBehaviour
         if(other.gameObject.TryGetComponent<EnemyMovement>(out EnemyMovement enemyMovement))
         {
             enemyMovement.Damage(damage);
+            GameObject tmpImpact = Instantiate(impactEffect,transform.position,transform.rotation);
+            Destroy(tmpImpact,1f);
+            Destroy(this.gameObject);
+        }
+        if(other.gameObject.CompareTag("Wall"))
+        {
+            GameObject tmpImpact = Instantiate(impactEffect,transform.position,transform.rotation);
+            Destroy(tmpImpact,1f);
+            Destroy(this.gameObject);
         }
     }
 }

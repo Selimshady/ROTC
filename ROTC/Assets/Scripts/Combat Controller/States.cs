@@ -53,8 +53,8 @@ public class States : MonoBehaviour
         maxHealth = PlayerPrefs.GetInt("maxHealth",5);
         currentHealth = PlayerPrefs.GetInt("currentHealth",5);
         Damage = PlayerPrefs.GetInt("Damage",1);
-        level = PlayerPrefs.GetInt("level",1);
-        skulls = PlayerPrefs.GetInt("skulls",50);
+        level = PlayerPrefs.GetInt("level",1); // Level index kontrolü son adımda yap.
+        skulls = PlayerPrefs.GetInt("skulls",20);
         speed = PlayerPrefs.GetFloat("speed",5f);
         cooldown = PlayerPrefs.GetFloat("cooldown",4f);
         enemyDamage = PlayerPrefs.GetInt("enemyDamage",1);

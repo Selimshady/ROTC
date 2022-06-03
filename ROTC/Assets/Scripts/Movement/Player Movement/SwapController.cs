@@ -53,7 +53,9 @@ public class SwapController : MonoBehaviour
                 active.SetActive(false);
                 warrior.SetActive(true);
                 active = warrior;
-                Instantiate(warriorEffect,active.transform.position + new Vector3(0,0,-1f),Quaternion.identity).transform.parent = active.transform;
+                ParticleSystem tmp = Instantiate(warriorEffect,active.transform.position + new Vector3(0,0,-1f),Quaternion.identity);
+                tmp.transform.parent = active.transform;
+                Destroy(tmp.gameObject,2f);
             }
             else if(Input.GetKeyDown(KeyCode.Alpha2) && !archer.activeInHierarchy)
             {
@@ -63,7 +65,9 @@ public class SwapController : MonoBehaviour
                 active.SetActive(false);
                 archer.SetActive(true);
                 active = archer;
-                Instantiate(archerEffect,active.transform.position + new Vector3(0,0,-1f),Quaternion.identity).transform.parent = active.transform;
+                ParticleSystem tmp = Instantiate(archerEffect,active.transform.position + new Vector3(0,0,-1f),Quaternion.identity);
+                tmp.transform.parent = active.transform;
+                Destroy(tmp.gameObject,2f);
             }
             else if(Input.GetKeyDown(KeyCode.Alpha3) && !wizard.activeInHierarchy)
             {
@@ -73,7 +77,9 @@ public class SwapController : MonoBehaviour
                 active.SetActive(false);
                 wizard.SetActive(true);
                 active = wizard;
-                Instantiate(wizardEffect,active.transform.position + new Vector3(0,0,-1f),Quaternion.identity).transform.parent = active.transform;
+                ParticleSystem tmp = Instantiate(wizardEffect,active.transform.position + new Vector3(0,0,-1f),Quaternion.identity);
+                tmp.transform.parent = active.transform;
+                Destroy(tmp.gameObject,1f);
             }
             cinemachine.Follow = active.transform;
         }

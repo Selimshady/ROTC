@@ -22,6 +22,7 @@ public class Collection : MonoBehaviour
     {
         skulls += gain;
         NpcInteraction.instance.UpdateUI();
+        States.instance.setSkulls(skulls);
     }
 
     public int getSkulls()
