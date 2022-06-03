@@ -6,43 +6,35 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public GameObject pauseMenu, gameOverMenu;
-    public static bool isPaused;
+    public static UIManager instance;
+    public bool inputAvailable;
+    public bool upgradeMenuActive;
     void Start()
     {
-        
+        instance = this;
+        inputAvailable = true;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        Debug.Log(isPaused);
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && !upgradeMenuActive)
         {
-            if(!isPaused)
+            if(inputAvailable)
                 Pause();
             else
                 Resume();
         }
-        
     }
     public void Pause()
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
-        isPaused = true;
+        inputAvailable = false;
     }
     public void Resume()
     {
-        if (isPaused)
-        {
-            pauseMenu.SetActive(false);
-            isPaused = false;
-        }
-        else
-        {
-            gameOverMenu.SetActive(false);
-        }
+        pauseMenu.SetActive(false);
         Time.timeScale = 1;
+        inputAvailable = true;
     }
     public void GameOver()
     {

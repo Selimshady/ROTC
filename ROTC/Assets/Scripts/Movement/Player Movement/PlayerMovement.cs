@@ -56,14 +56,9 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Update()
     {   
-        if(SceneManager.GetActiveScene().name.Equals("Main Level"))
-            if(NpcInteraction.inputAvailable)
-                InputProcess();//Gets input values about jumping and moving.
-            else
-                moveDirection = 0;
-        else if(!isDeath)
-            InputProcess();
-        else 
+        if(UIManager.instance.inputAvailable && !isDeath)
+            InputProcess();//Gets input values about jumping and moving.
+        else
             moveDirection = 0;
     }
 

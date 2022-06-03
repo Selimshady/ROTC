@@ -16,14 +16,12 @@ public class NpcInteraction : MonoBehaviour
     public TMP_Text skullsText;
 
     public static NpcInteraction instance;
-
-    public static bool inputAvailable;
+    private bool upgradeMenuActive;
 
 
     private void Start() 
     {
         instance = this;
-        inputAvailable = true;
     }
 
     // Update is called once per frame
@@ -31,22 +29,25 @@ public class NpcInteraction : MonoBehaviour
     {
         if(isInRange)
         {
-            if(Input.GetKeyDown(interactKey))
+            if(Input.GetKeyDown(interactKey) && UIManager.instance.inputAvailable)
             {
                 interactAction.Invoke();
                 UpdateUI();
-                inputAvailable = false;
+                UIManager.instance.inputAvailable = false;
+                UIManager.instance.upgradeMenuActive = true;
             }
-        }
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            CloseUpgradeMenu();
+            if(Input.GetKeyDown(KeyCode.Escape) && UIManager.instance.upgradeMenuActive)
+            {
+                Debug.Log("geldi1");
+                CloseUpgradeMenu();
+            }
         }
     }
     public void CloseUpgradeMenu()
     {
         canvas.SetActive(false);
-        inputAvailable = true;
+        UIManager.instance.inputAvailable = true;
+        UIManager.instance.upgradeMenuActive = false;
     }
     
     private void OnTriggerEnter2D(Collider2D other) {
