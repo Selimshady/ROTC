@@ -13,7 +13,7 @@ public class States : MonoBehaviour
     private int currentHealth; 
 
     [Header("Level")]
-    private int level;
+    private string level;
 
     [Header("Player")]
     private float speed; 
@@ -29,11 +29,12 @@ public class States : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        loadData();
     }
 
-    private void Start() {
-        level = SceneManager.GetActiveScene().buildIndex;
+    private void Start()
+    {
+        if(SceneManager.GetActiveScene().name.Equals("Main Level") || SceneManager.GetActiveScene().name.Equals("Level 1"))
+            loadData();
     }
 
     public void saveData()
@@ -41,7 +42,7 @@ public class States : MonoBehaviour
         PlayerPrefs.SetInt("maxHealth",maxHealth);
         PlayerPrefs.SetInt("currentHealth",currentHealth);
         PlayerPrefs.SetInt("Damage",Damage);
-        PlayerPrefs.SetInt("level",level);
+        PlayerPrefs.SetString("level",level);
         PlayerPrefs.SetInt("skulls",skulls);
         PlayerPrefs.SetFloat("speed",speed);
         PlayerPrefs.SetFloat("cooldwon",cooldown);
@@ -53,11 +54,27 @@ public class States : MonoBehaviour
         maxHealth = PlayerPrefs.GetInt("maxHealth",5);
         currentHealth = PlayerPrefs.GetInt("currentHealth",5);
         Damage = PlayerPrefs.GetInt("Damage",1);
-        level = PlayerPrefs.GetInt("level",1); // Level index kontrolü son adımda yap.
-        skulls = PlayerPrefs.GetInt("skulls",20);
+        level = PlayerPrefs.GetString("level","Level 1");
+        skulls = PlayerPrefs.GetInt("skulls",0);
         speed = PlayerPrefs.GetFloat("speed",5f);
         cooldown = PlayerPrefs.GetFloat("cooldown",4f);
         enemyDamage = PlayerPrefs.GetInt("enemyDamage",1);
+    }
+
+    public bool CheckSaveFile() // For main menu
+    {
+        return PlayerPrefs.HasKey("level");
+    }
+
+    public void NewGame()
+    {
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene("Level 1");
+    }
+
+    public void LoadGame()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetString("level"));
     }
 
     public int getEnemyDamage()
@@ -80,7 +97,7 @@ public class States : MonoBehaviour
         return Damage;
     }
 
-    public int getLevel()
+    public string getLevel()
     {
         return level;
     }
@@ -120,7 +137,7 @@ public class States : MonoBehaviour
         Damage = damage;
     }
 
-    public void setLevel(int level)
+    public void setLevel(string level)
     {
         this.level = level;
     }
