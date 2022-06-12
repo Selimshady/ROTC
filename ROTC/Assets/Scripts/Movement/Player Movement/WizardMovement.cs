@@ -57,7 +57,7 @@ public class WizardMovement : PlayerMovement
             if(Input.GetMouseButtonDown(1) && !isAttacking && isGrounded) 
             {
                 isSearching = true;
-                teleportRangeCenter.GetComponent<SpriteRenderer>().enabled = true;
+                teleportRangeCenter.SetActive(true);
             }
             if(Input.GetMouseButtonUp(1) && isSearching)
             {
@@ -69,7 +69,7 @@ public class WizardMovement : PlayerMovement
                 }
                         
                 isSearching = false;
-                teleportRangeCenter.GetComponent<SpriteRenderer>().enabled = false;
+                teleportRangeCenter.SetActive(false);
             }
         }
     }
