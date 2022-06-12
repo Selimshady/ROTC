@@ -27,7 +27,7 @@ public class Sword : MonoBehaviour
             {
                 if(!warriorMovement.getIsBlocking())
                 {
-                    playerMovement.Damage(damage);
+                    playerMovement.Damage(enemyDamage);
                 }
                 else
                 {
