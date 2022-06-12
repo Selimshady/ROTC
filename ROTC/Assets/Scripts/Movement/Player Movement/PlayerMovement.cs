@@ -48,11 +48,11 @@ public class PlayerMovement : MonoBehaviour
         moveSpeed = States.instance.getSpeed();
     }
 
-    private void OnEnable() 
+    /*private void OnEnable() 
     {
         if(States.instance != null)
             moveSpeed = States.instance.getSpeed();
-    }
+    }*/ 
 
     protected virtual void Update()
     {   
@@ -151,6 +151,11 @@ public class PlayerMovement : MonoBehaviour
             States.instance.setSpeed(moveSpeed);
             Collection.instance.updateSkulls(-10);
         }
+    }
+
+    public void endOfGame()
+    {
+        UIManager.instance.GameOver();
     }
 
 }

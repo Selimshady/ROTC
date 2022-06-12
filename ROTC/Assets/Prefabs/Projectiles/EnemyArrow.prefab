@@ -165,3 +165,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemyArrow: 1
+  effectPrefab: {fileID: 2821197044193360102, guid: 9181a94d25966ab4a9283ba4ede290a4, type: 3}

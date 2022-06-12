@@ -76,10 +76,17 @@ public class ArcherMovement : PlayerMovement
     {
         if(isDeath)
         {
+            animator.speed = 1;
             ChangeAnimationState(DEATH);
         }
         else if(isGettingHit)
         {
+            if(!isReleased)
+            {
+                Release();
+                isHolding = false;
+                animator.speed = 1;
+            }            
             ChangeAnimationState(HIT);
         }
         else if(isStartStreching)

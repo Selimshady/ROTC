@@ -95,6 +95,11 @@ public class WarriorMovement : PlayerMovement
         }
         else if(isGettingHit)
         {
+            if(isBlockPressed)
+            {
+                isBlockPressed = false;
+                isBlocking = false;
+            }
             ChangeAnimationState(HIT);
         }
         else if(isBlockPressed)
@@ -156,5 +161,10 @@ public class WarriorMovement : PlayerMovement
     public bool getIsAttacking()
     {
         return isAttacking;
+    }
+    
+    public bool getIsBlocking()
+    {
+        return isBlocking;
     }
 }

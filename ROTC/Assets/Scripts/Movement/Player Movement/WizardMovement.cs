@@ -116,6 +116,11 @@ public class WizardMovement : PlayerMovement
         }
         else if(isGettingHit)
         {
+            if(isAttacking || isTeleporting)
+            {
+                isAttacking = false;
+                isTeleporting = false;
+            }
             ChangeAnimationState(HIT);
         }
         else if(isTeleporting)

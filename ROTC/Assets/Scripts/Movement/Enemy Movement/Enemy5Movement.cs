@@ -13,34 +13,40 @@ public class Enemy5Movement : EnemyMovement
     private Transform activeTransform;
 
     public float rotationModifer;
+
+    public float attackCoolDown;
     // Start is called before the first frame update
     protected void Start()
     {
-
+        attackCoolDown = 3f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        activeTransform = SwapController.instance.getActive().transform ; 
-        if(Vector2.Distance(transform.position, activeTransform.position) < 5)
+        if(!isDeath)
         {
-            isInRange = true;
-        }
-        else
-        {
-            isInRange = false;
-        }
-        
-        if(transform.position.x > activeTransform.position.x && facingRight)
-        {
-            transform.Rotate(0,180f,0);
-            facingRight = false;
-        }
-        else if(transform.position.x < activeTransform.position.x && !facingRight)
-        {
-            transform.Rotate(0,180f,0);
-            facingRight = true;
+            activeTransform = SwapController.instance.getActive().transform ; 
+            if(Vector2.Distance(transform.position, activeTransform.position) < 5)
+            {
+                isInRange = true;
+            }
+            else
+            {
+                isInRange = false;
+            }
+            
+            if(transform.position.x > activeTransform.position.x && facingRight)
+            {
+                transform.Rotate(0,180f,0);
+                facingRight = false;
+            }
+            else if(transform.position.x < activeTransform.position.x && !facingRight)
+            {
+                transform.Rotate(0,180f,0);
+                facingRight = true;
+            }
+            attackCoolDown-=Time.deltaTime;
         }
     }
 
@@ -57,13 +63,11 @@ public class Enemy5Movement : EnemyMovement
         if(facingRight)
         {
             angle = Vector2.Angle(new Vector2(1f,0f),new Vector2(target.x,target.y));
-            Debug.Log(angle);
             if (target.y < 0.0f) angle = 360.0f - angle;
         }
         else
         {
             angle = Vector2.Angle(new Vector2(-1f,0f),new Vector2(target.x,target.y)) * -1;
-            Debug.Log(angle);
             if (target.y > 0.0f) angle = 360.0f - angle;
         }
         spawnPos.Rotate(0f,0f,angle);
@@ -83,14 +87,15 @@ public class Enemy5Movement : EnemyMovement
         {
             ChangeAnimationState(HIT);
         }
-        else if(isInRange)
+        else if(isInRange && attackCoolDown < 0)
         {
             if(transform.position.y > SwapController.instance.getActive().transform.position.y + 1)
                 ChangeAnimationState(ATTACK + "2");
             else
                 ChangeAnimationState(ATTACK + "1");
+            attackCoolDown = 3f;
         }
-        else
+        else if(attackCoolDown < 2)
             ChangeAnimationState(IDLE);
     }
 }

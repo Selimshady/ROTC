@@ -18,6 +18,9 @@ public class Enemy1Movement : EnemyMovement
     private float cooldownToTurn;
     // Start is called before the first frame update
 
+    private Transform activeTransform;
+    private bool isAttacking;
+
     protected void Start()
     {
         cooldownToTurn = 0.2f;
@@ -27,11 +30,31 @@ public class Enemy1Movement : EnemyMovement
     // Update is called once per frame
     void Update()
     {
-        cooldownToTurn-=Time.deltaTime;
-        if(mustPatrol)
+        if(!isDeath)
         {
-            Patrol();
-        }   
+            activeTransform = SwapController.instance.getActive().transform; 
+            if(Vector2.Distance(transform.position, activeTransform.position) < 5)
+            {
+                mustPatrol = false;
+                if(transform.position.x - activeTransform.position.x > 0)
+                {
+                    moveSpeed = -1 * Mathf.Abs(moveSpeed);
+                }
+                else
+                {
+                    moveSpeed = Mathf.Abs(moveSpeed);
+                }
+                rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+                if(Vector2.Distance(transform.position, activeTransform.position) < 2)
+                    isAttacking = true;
+            }
+            else
+            {
+                mustPatrol = true;
+                Patrol();
+            }
+            cooldownToTurn-=Time.deltaTime;
+        }
     }
 
     private void FixedUpdate() 
@@ -62,14 +85,6 @@ public class Enemy1Movement : EnemyMovement
         cooldownToTurn = 0.2f;
     }
 
-    //Patrolling up , chasing down
-
-    /*private void Move()
-    {
-        if(!(isDeath || isGettingHit))
-            rb.velocity = new Vector2(moveSpeed * Time.fixedDeltaTime, rb.velocity.y);    
-    }*/
-
     protected void FlipCharacter()
     {
         if((moveSpeed > 0 && !facingRight) || (moveSpeed < 0 && facingRight))
@@ -87,7 +102,13 @@ public class Enemy1Movement : EnemyMovement
         }
         else if(isGettingHit)
         {
+            if(isAttacking)
+                isAttacking = false;
             ChangeAnimationState(HIT);
+        }
+        else if(isAttacking)
+        {
+            ChangeAnimationState(ATTACK + "1");
         }
         else
         {
@@ -97,5 +118,10 @@ public class Enemy1Movement : EnemyMovement
 
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(frontPoint.position,0.1f);
+    }
+
+    public void endOfAttack()
+    {
+        isAttacking = false;
     }
 }

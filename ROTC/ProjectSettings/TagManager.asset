@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sword
   - Wall
+  - Shield
   layers:
   - Default
   - TransparentFX

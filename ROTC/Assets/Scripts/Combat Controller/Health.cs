@@ -11,8 +11,8 @@ public class Health : MonoBehaviour
     private void Start()
     {
         maxHealth = States.instance.getMaxHealth();
-        currentHealth = States.instance.getCurrentHealth();
-    }
+        currentHealth = maxHealth;
+    }   
 
     public bool Damage(int damage)
     {
@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
         return false;
     }
 
-    public void Heal(int itemHealth)
+    /*public void Heal(int itemHealth)
     {
         if(currentHealth + itemHealth > maxHealth)
         {
@@ -34,39 +34,50 @@ public class Health : MonoBehaviour
         {
             currentHealth +=itemHealth;
         }
-    }
+    }*/
 
-    public void Respawn()
+    /*public void Respawn()
     {
         currentHealth = maxHealth;
-    }
+    }*/
 
     public int getCurrentHealth()
     {
         return currentHealth;
     }
 
-    public void setHealth(int health)
+    /*public void setHealth(int health)
     {
         currentHealth = health;
-    }
+    }*/
 
-    public void setMaxHealth(int health)
+    /*public void setMaxHealth(int health)
     {
         maxHealth = health;
-    }
+    }*/
 
-    public int getMaxHealth()
+    /*public int getMaxHealth()
     {
         return maxHealth;
-    }
+    }*/
 
     public void upgradeHealth()
     {
         maxHealth++;
         currentHealth = maxHealth;
         States.instance.setMaxHealth(maxHealth);
-        States.instance.setCurrentHealth(currentHealth);
         Collection.instance.updateSkulls(-10);
+    }
+
+
+    ///////////Under Progress ////////////
+    public void endDamage()
+    {
+        GetComponentInParent<EnemyMovement>().DamageEnd();
+    }
+
+    public void EndOfAttack()
+    {
+        GetComponentInParent<Enemy1Movement>().endOfAttack();
     }
 }

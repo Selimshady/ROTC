@@ -10,7 +10,6 @@ public class States : MonoBehaviour
 
     [Header("Health")]
     private int maxHealth; 
-    private int currentHealth; 
 
     [Header("Level")]
     private string level;
@@ -34,14 +33,10 @@ public class States : MonoBehaviour
             loadData();
     }
 
-    private void Start()
-    {
-    }
 
     public void saveData()
     {
         PlayerPrefs.SetInt("maxHealth",maxHealth);
-        PlayerPrefs.SetInt("currentHealth",currentHealth);
         PlayerPrefs.SetInt("Damage",Damage);
         PlayerPrefs.SetString("level",level);
         PlayerPrefs.SetInt("skulls",skulls);
@@ -53,10 +48,9 @@ public class States : MonoBehaviour
     public void loadData()
     {
         maxHealth = PlayerPrefs.GetInt("maxHealth",5);
-        currentHealth = PlayerPrefs.GetInt("currentHealth",5);
         Damage = PlayerPrefs.GetInt("Damage",1);
         level = PlayerPrefs.GetString("level","Level 1");
-        skulls = PlayerPrefs.GetInt("skulls",10);
+        skulls = PlayerPrefs.GetInt("skulls",0);
         speed = PlayerPrefs.GetFloat("speed",5f);
         cooldown = PlayerPrefs.GetFloat("cooldown",4f);
         enemyDamage = PlayerPrefs.GetInt("enemyDamage",1);
@@ -88,10 +82,6 @@ public class States : MonoBehaviour
         return maxHealth;
     }
 
-    public int getCurrentHealth()
-    {
-        return currentHealth;
-    }
 
     public int getDamage()
     {
@@ -126,11 +116,6 @@ public class States : MonoBehaviour
     public void setMaxHealth(int health)
     {
         maxHealth = health;
-    }
-
-    public void setCurrentHealth(int health)
-    {
-        currentHealth = health;
     }
 
     public void setDamage(int damage)

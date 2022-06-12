@@ -7,6 +7,8 @@ public class Sword : MonoBehaviour
     int damage;
     int enemyDamage;
 
+    public GameObject effectPrefab;
+
     private void Start() 
     {
         enemyDamage = States.instance.getEnemyDamage();
@@ -21,7 +23,22 @@ public class Sword : MonoBehaviour
         }
         else if(other.gameObject.TryGetComponent<PlayerMovement>(out PlayerMovement playerMovement) && GetComponentInParent<EnemyMovement>())
         {
-            playerMovement.Damage(enemyDamage);
+            if(other.gameObject.TryGetComponent<WarriorMovement>(out WarriorMovement warriorMovement))
+            {
+                if(!warriorMovement.getIsBlocking())
+                {
+                    playerMovement.Damage(damage);
+                }
+                else
+                {
+                    GameObject effect = Instantiate(effectPrefab,other.gameObject.transform.position,Quaternion.identity);
+                    Destroy(effect,0.4f);
+                }
+            }
+            else
+            {
+                playerMovement.Damage(enemyDamage);
+            }
         }
     }
 

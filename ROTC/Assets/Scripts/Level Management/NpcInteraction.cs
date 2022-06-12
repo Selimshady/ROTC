@@ -38,7 +38,6 @@ public class NpcInteraction : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.Escape) && UIManager.instance.upgradeMenuActive)
             {
-                Debug.Log("geldi1");
                 CloseUpgradeMenu();
             }
         }
