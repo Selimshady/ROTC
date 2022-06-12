@@ -55,6 +55,10 @@ public class Enemy1Movement : EnemyMovement
             }
             cooldownToTurn-=Time.deltaTime;
         }
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
     }
 
     private void FixedUpdate() 

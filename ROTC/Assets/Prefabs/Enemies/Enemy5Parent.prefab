@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 7279027095445204706}
   - component: {fileID: 7279027095445204707}
   - component: {fileID: 1346691879}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d936dd21ee26bad4d97405e787e45823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
 --- !u!50 &7279027095445204706
 Rigidbody2D:
   serializedVersion: 4
@@ -263,7 +262,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &7279027095445204707
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -314,3 +313,4 @@ MonoBehaviour:
   arrowPrefab: {fileID: 326794722215011036, guid: 2aabd9a8cc2d7dd458cee286500d2bea, type: 3}
   spawnPos: {fileID: 219937949}
   rotationModifer: 0
+  attackCoolDown: 0

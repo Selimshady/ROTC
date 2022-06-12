@@ -86,6 +86,11 @@ public class WizardMovement : PlayerMovement
         isTeleporting = false;
     }
 
+    public bool getIsTeleporting()
+    {
+        return isTeleporting;
+    }
+
     /*protected virtual void OnDrawGizmos() 
     { // to be able to see the groundCheck radius
         Gizmos.DrawWireSphere(teleportRangeCenter.transform.position,5f);

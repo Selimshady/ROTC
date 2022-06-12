@@ -9,5 +9,9 @@ public class Death : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerMovement>().Damage(100);
         }
+        else if(other.gameObject.GetComponent<EnemyMovement>())
+        {
+            other.gameObject.GetComponent<EnemyMovement>().Damage(100);
+        }
     }
 }

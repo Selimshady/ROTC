@@ -83,7 +83,7 @@ public class SwapController : MonoBehaviour
     private bool IsBusy()
     {
         return (warrior.GetComponent<WarriorMovement>().getIsAttacking() || archer.GetComponent<ArcherMovement>().getIsAttacking() || 
-            wizard.GetComponent<WizardMovement>().getIsAttacking());
+            wizard.GetComponent<WizardMovement>().getIsAttacking() || wizard.GetComponent<WizardMovement>().getIsTeleporting());
     }
 
     public GameObject getActive()
