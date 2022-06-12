@@ -26,13 +26,17 @@ public class Arrow : MonoBehaviour
                 GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             }
         }
-        else
+    }
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(isEnemyArrow)
         {
             if(other.gameObject.TryGetComponent<PlayerMovement>(out PlayerMovement playerMovement))
             {
                 playerMovement.Damage(1);
                 Destroy(this.gameObject);
             }
+
         }
     }
 }

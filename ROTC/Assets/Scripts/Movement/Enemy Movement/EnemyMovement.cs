@@ -60,6 +60,7 @@ public class EnemyMovement : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().simulated = false;
             isDeath = true;
+            Collection.instance.UpdateSkullsCombat(1);
         }
         else
         {

@@ -7,8 +7,7 @@ public class Health : MonoBehaviour
 {
     private int currentHealth; 
     private int maxHealth;
-
-    // Start is called before the first frame update
+    
     private void Start()
     {
         maxHealth = States.instance.getMaxHealth();

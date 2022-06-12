@@ -28,6 +28,7 @@ public class States : MonoBehaviour
 
     private void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         instance = this;
         if(SceneManager.GetActiveScene().name.Equals("Main Level") || SceneManager.GetActiveScene().name.Equals("Level 1"))
             loadData();
@@ -35,8 +36,6 @@ public class States : MonoBehaviour
 
     private void Start()
     {
-        //if(SceneManager.GetActiveScene().name.Equals("Main Level") || SceneManager.GetActiveScene().name.Equals("Level 1"))
-        //    loadData();
     }
 
     public void saveData()
@@ -57,7 +56,7 @@ public class States : MonoBehaviour
         currentHealth = PlayerPrefs.GetInt("currentHealth",5);
         Damage = PlayerPrefs.GetInt("Damage",1);
         level = PlayerPrefs.GetString("level","Level 1");
-        skulls = PlayerPrefs.GetInt("skulls",0);
+        skulls = PlayerPrefs.GetInt("skulls",10);
         speed = PlayerPrefs.GetFloat("speed",5f);
         cooldown = PlayerPrefs.GetFloat("cooldown",4f);
         enemyDamage = PlayerPrefs.GetInt("enemyDamage",1);
