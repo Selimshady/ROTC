@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SwapController : MonoBehaviour
 {
+    public static SwapController instance;
 
     public GameObject warrior;
     public GameObject archer;
@@ -20,6 +21,7 @@ public class SwapController : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
         warrior.SetActive(true);
         archer.SetActive(false);
         wizard.SetActive(false);   
@@ -83,4 +85,10 @@ public class SwapController : MonoBehaviour
         return (warrior.GetComponent<WarriorMovement>().getIsAttacking() || archer.GetComponent<ArcherMovement>().getIsAttacking() || 
             wizard.GetComponent<WizardMovement>().getIsAttacking());
     }
+
+    public GameObject getActive()
+    {
+        return active;
+    }
+
 }

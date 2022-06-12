@@ -5,6 +5,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     int damage;
+    public bool isEnemyArrow;
 
     private void Start() 
     {
@@ -13,14 +14,25 @@ public class Arrow : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        if(other.gameObject.TryGetComponent<EnemyMovement>(out EnemyMovement enemyMovement))
+        if(!isEnemyArrow)
         {
-            enemyMovement.Damage(damage);
-            Destroy(gameObject);
+            if(other.gameObject.TryGetComponent<EnemyMovement>(out EnemyMovement enemyMovement))
+            {
+                enemyMovement.Damage(damage);
+                Destroy(gameObject);
+            }
+            if(other.gameObject.CompareTag("Wall"))
+            {
+                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            }
         }
-        if(other.gameObject.CompareTag("Wall"))
+        else
         {
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            if(other.gameObject.TryGetComponent<PlayerMovement>(out PlayerMovement playerMovement))
+            {
+                playerMovement.Damage(1);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

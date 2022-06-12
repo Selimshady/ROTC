@@ -33,10 +33,10 @@ public class EnemyMovement : MonoBehaviour
     protected const string HIT = "GetHit";
     protected const string DEATH = "Death";
 
-    protected void Awake() 
+    virtual protected void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     protected void CheckGround()

@@ -52,6 +52,11 @@ public class Health : MonoBehaviour
         currentHealth = health;
     }
 
+    public void setMaxHealth(int health)
+    {
+        maxHealth = health;
+    }
+
     public int getMaxHealth()
     {
         return maxHealth;

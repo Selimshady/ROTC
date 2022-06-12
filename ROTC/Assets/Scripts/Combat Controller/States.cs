@@ -29,12 +29,14 @@ public class States : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        if(SceneManager.GetActiveScene().name.Equals("Main Level") || SceneManager.GetActiveScene().name.Equals("Level 1"))
+            loadData();
     }
 
     private void Start()
     {
-        if(SceneManager.GetActiveScene().name.Equals("Main Level") || SceneManager.GetActiveScene().name.Equals("Level 1"))
-            loadData();
+        //if(SceneManager.GetActiveScene().name.Equals("Main Level") || SceneManager.GetActiveScene().name.Equals("Level 1"))
+        //    loadData();
     }
 
     public void saveData()

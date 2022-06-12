@@ -12,7 +12,6 @@ public class Loader : MonoBehaviour
             if(SceneManager.GetActiveScene().name.Equals("Level 1"))
             {
                 States.instance.setLevel("Main Level");
-                Debug.Log(SceneManager.GetSceneByName("Main Level").buildIndex);
                 States.instance.setSkulls(States.instance.getSkulls() + 10);
                 States.instance.saveData();
                 SceneManager.LoadScene("Main Level");
